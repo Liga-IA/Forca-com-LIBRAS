@@ -16,10 +16,10 @@ export async function loadModel(): Promise<void> {
     return;
   }
   try {
-    // Constrói a URL absoluta para o modelo
-    const modelUrl = new URL('/libras-model/model.json', window.location.origin);
-    console.log(`Carregando modelo de: ${modelUrl.href}`);
-    model = await tf.loadGraphModel(modelUrl.href);
+    // Usa caminho relativo para evitar depender de window em SSR
+    const modelPath = '/libras-model/model.json';
+    console.log(`Carregando modelo de: ${modelPath}`);
+    model = await tf.loadGraphModel(modelPath);
     console.log('Modelo carregado com sucesso!');
 
     // Opcional: "Aquecer" o modelo para otimizar a primeira inferência

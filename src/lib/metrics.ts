@@ -4,7 +4,10 @@ interface GameMetrics {
     total_played: number;
 }
 
+const isBrowser = typeof window !== "undefined" && typeof localStorage !== "undefined";
+
 const setMetrics = () => {
+    if (!isBrowser) return; // Evita acessar localStorage no servidor
     const currentMetrics = localStorage.getItem("gameMetrics");
     let metricsArray: GameMetrics[] = [];
     
@@ -40,6 +43,7 @@ const setMetrics = () => {
 }
 
 const getMetrics = (): GameMetrics[] => {
+    if (!isBrowser) return [];
     const currentMetrics = localStorage.getItem("gameMetrics");
     if (currentMetrics) {
         const metricsArray = JSON.parse(currentMetrics);
