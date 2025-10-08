@@ -45,7 +45,6 @@ export const challenges = [
     },
 
     { word: "PATO", description: "Ave que nada em lagos", image: "/assets/pato.jpg", difficulty: "easy" },
-    { word: "PEIXE", description: "Animal que vive na agua", image: "/assets/peixe.jpg", difficulty: "easy" },
     { word: "SAPO", description: "Amfibio que pula muito", image: "/assets/sapo.jpg", difficulty: "easy" },
     { word: "MESA", description: "Movel usado para apoiar objetos", image: "/assets/mesa.jpg", difficulty: "easy" },
     { word: "CADEIRA", description: "Movel usado para sentar", image: "/assets/cadeira.jpg", difficulty: "easy" },
@@ -56,7 +55,6 @@ export const challenges = [
     { word: "FLORESTA", description: "Regiao com muitas arvores", image: "/assets/floresta.jpg", difficulty: "easy" },
     { word: "RIO", description: "Curso natural de agua", image: "/assets/rio.jpg", difficulty: "easy" },
     { word: "MAR", description: "Grande corpo de agua salgada", image: "/assets/mar.jpg", difficulty: "easy" },
-    { word: "MONTANHA", description: "Grande elevacao da terra", image: "/assets/montanha.jpg", difficulty: "easy" },
 
     { word: "COMPUTADOR", description: "Maquina usada para processar informacoes", image: "/assets/computador.jpg", difficulty: "medium" },
     { word: "TECLADO", description: "Dispositivo de entrada de dados", image: "/assets/teclado.jpg", difficulty: "medium" },
@@ -64,9 +62,7 @@ export const challenges = [
     { word: "TELA", description: "Superficie de exibicao de imagens", image: "/assets/tela.jpg", difficulty: "medium" },
     { word: "CAMERA", description: "Aparelho para capturar imagens", image: "/assets/camera.jpg", difficulty: "medium" },
     { word: "CARTEIRA", description: "Objeto para guardar dinheiro", image: "/assets/carteira.jpg", difficulty: "medium" },
-    { word: "DINHEIRO", description: "Meio de troca economico", image: "/assets/dinheiro.jpg", difficulty: "medium" },
     { word: "BANCO", description: "Instituicao financeira", image: "/assets/banco.jpg", difficulty: "medium" },
-    { word: "IGREJA", description: "Local de oracao", image: "/assets/igreja.jpg", difficulty: "medium" },
     { word: "PONTE", description: "Construcao que liga dois lugares", image: "/assets/ponte.jpg", difficulty: "medium" },
     { word: "ESTRADA", description: "Caminho pavimentado para veiculos", image: "/assets/estrada.jpg", difficulty: "medium" },
     { word: "BARCO", description: "Veiculo usado no mar", image: "/assets/barco.jpg", difficulty: "medium" },
@@ -74,7 +70,5 @@ export const challenges = [
     { word: "UNIVERSO", description: "Conjunto de tudo que existe", image: "/assets/universo.jpg", difficulty: "hard" },
     { word: "PLANETA", description: "Corpo celeste que orbita uma estrela", image: "/assets/planeta.jpg", difficulty: "hard" },
     { word: "ESTRELA", description: "Astro que brilha no ceu", image: "/assets/estrela.jpg", difficulty: "hard" },
-    { word: "GALAXIA", description: "Grande sistema de estrelas", image: "/assets/galaxia.jpg", difficulty: "hard" },
-
   ];
   
