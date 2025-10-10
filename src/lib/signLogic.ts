@@ -1,8 +1,5 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
-import { predictSign as predictSignFromModel, loadModel } from './modelService';
-
-// Carrega o modelo assim que este módulo for importado
-loadModel().catch(console.error);
+import { predictSign as predictSignFromModel } from './modelService';
 
 /**
  * Verifica se os landmarks da mão formam a letra 'R' em LIBRAS.
