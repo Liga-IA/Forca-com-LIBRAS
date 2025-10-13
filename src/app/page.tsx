@@ -2,7 +2,6 @@
 import { setMetrics } from "@/lib/metrics";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -60,11 +59,11 @@ export default function Home() {
               <ThumbsUp /> <p className="ml-2">Iniciar o jogo</p>
             </button>
 
-            <Link href="/analytics">
+            {/* <Link href="/analytics">
               <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-2xl transition-transform transform hover:scale-105">
                 <p>Ver métricas</p>
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
