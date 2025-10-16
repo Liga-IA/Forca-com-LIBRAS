@@ -70,5 +70,12 @@ export const challenges = [
     { word: "UNIVERSO", description: "Conjunto de tudo que existe", image: "/assets/universo.jpg", difficulty: "hard" },
     { word: "PLANETA", description: "Corpo celeste que orbita uma estrela", image: "/assets/planeta.jpg", difficulty: "hard" },
     { word: "ESTRELA", description: "Astro que brilha no ceu", image: "/assets/estrela.jpg", difficulty: "hard" },
+
+    {
+      word: "BOTAS",
+      description: "Vestimentas para os pés",
+      image: "/assets/botas.jpg",
+      difficulty: "easy",
+    },
   ];
   
