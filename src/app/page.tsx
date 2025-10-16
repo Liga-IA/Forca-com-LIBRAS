@@ -1,15 +1,10 @@
 "use client";
-import { setMetrics } from "@/lib/metrics";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { saveGame } from "./actions";
 
 export default function Home() {
-  const router = useRouter();
-  const handleStartGame = () => {
-    router.push("/game");
-    setMetrics();
-  };
+  const handleStartGame = async () => {};
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
@@ -53,7 +48,7 @@ export default function Home() {
               Teste suas habilidades em LIBRAS e descubra as palavras!
             </p>
             <button
-              onClick={handleStartGame}
+              onClick={saveGame}
               className="flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
             >
               <ThumbsUp /> <p className="ml-2">Iniciar o jogo</p>
