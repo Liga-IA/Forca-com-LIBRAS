@@ -6,10 +6,10 @@ import GameWonScreen from "@/components/GameWonScreen";
 import { HangmanDrawing } from "@/components/hangManDrawing";
 import { WordDisplay } from "@/components/wordDisplay";
 import { WrongLettersDisplay } from "@/components/wrongLattersDisplay";
-import { setMetrics } from "@/lib/metrics";
 import { challenges } from "@/utils/dictionary";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import { saveGame } from "../actions";
 
 const getRandomChallenge = () => {
   const randomIndex = Math.floor(Math.random() * challenges.length);
@@ -41,8 +41,12 @@ export default function GamePage() {
     setCombo(0);
     setGameState("playing");
     setShowParticles(false);
-    setMetrics();
+    // setMetrics();
   };
+
+  useEffect(() => {
+    saveGame();
+  }, []);
 
   const handleRealTimeSignDetected = (sign: string | null) => {
     setRealTimeDetectedSign(sign);

@@ -1,26 +1,20 @@
 "use client";
-import {
-  getMetrics,
-  getTodayGamesPlayed,
-  getTotalGamesPlayed,
-} from "@/lib/metrics";
 
 export default function Metrics() {
-  const metrics = getMetrics();
   return (
     <div>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Métricas do Jogo</h2>
 
         <div className="mb-6">
-          <p className="text-lg mb-2">
+          {/* <p className="text-lg mb-2">
             Total de jogos jogados:{" "}
             <span className="font-semibold">{getTotalGamesPlayed()}</span>
           </p>
           <p className="text-lg">
             Jogos jogados hoje:{" "}
             <span className="font-semibold">{getTodayGamesPlayed()}</span>
-          </p>
+          </p> */}
         </div>
 
         <div className="overflow-x-auto">
@@ -36,7 +30,7 @@ export default function Metrics() {
               </tr>
             </thead>
             <tbody className="bg-transparent divide-y divide-gray-600">
-              {metrics.length > 0 ? (
+              {/* {metrics.length > 0 ? (
                 metrics.map((metric, index) => (
                   <tr key={index} className="hover:bg-black">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-purple-500">
@@ -56,7 +50,7 @@ export default function Metrics() {
                     Nenhum dado disponível
                   </td>
                 </tr>
-              )}
+              )} */}
             </tbody>
           </table>
         </div>

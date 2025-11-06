@@ -1,10 +1,15 @@
 "use client";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import { saveGame } from "./actions";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
-  const handleStartGame = async () => {};
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleStartGame = async () => {
+    router.push("/game");
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
@@ -47,11 +52,21 @@ export default function Home() {
             <p className="text-xl lg:text-2xl text-slate-300 max-w-md mx-auto">
               Teste suas habilidades em LIBRAS e descubra as palavras!
             </p>
+
             <button
-              onClick={saveGame}
+              onClick={handleStartGame}
+              disabled={loading}
+              aria-busy={loading}
               className="flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
             >
-              <ThumbsUp /> <p className="ml-2">Iniciar o jogo</p>
+              {loading ? (
+                "Carregando..."
+              ) : (
+                <>
+                  <ThumbsUp />
+                  <p className="ml-2">Iniciar o jogo</p>
+                </>
+              )}
             </button>
 
             {/* <Link href="/analytics">

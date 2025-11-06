@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+# Keep Dockerfile in build context so Compose can read it
+docker-compose.yml
+npm-debug.log
+pnpm-lock.yaml
+yarn.lock
+dist
+coverage
+*.log

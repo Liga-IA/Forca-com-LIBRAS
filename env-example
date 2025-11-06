@@ -1,0 +1,4 @@
+POSTGRES_USER="iris"
+POSTGRES_PASSWORD="iris_2025"
+POSTGRES_DB="iris_db"
+DATABASE_URL="postgresql://iris:iris_2025@localhost:5482/iris_db?schema=public"
