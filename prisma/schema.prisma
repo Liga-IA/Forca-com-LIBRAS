@@ -12,11 +12,6 @@ model GameSession {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime  @default(now())
 
-  // Location Data
-  city          String?
-  region        String?
-  country       String?
-
   // Game Result
   wasSuccessful Boolean
   wrongGuesses  String[]

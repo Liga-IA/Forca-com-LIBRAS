@@ -1,22 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GeolocationService } from "./lib/geolocation";
 
 let pageViews = 0;
 
 export async function middleware(request: NextRequest) {
-  const userIp = (await GeolocationService.getUserIP()) || "0.0.0.0";
-  const locationData = await GeolocationService.getLocationByIP(userIp);
-
   if (request.nextUrl.pathname === "/") {
     try {
      
-      const {city, region, country} = locationData || {};
-
       const data = {
-        ip: userIp,
-        cidade: city,
-        regiao: region,
-        pais: country,
         pageViews: pageViews++,
         timestamp: new Date().toISOString(),
       }

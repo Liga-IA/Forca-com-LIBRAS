@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const {
-      city, region, country, // Geolocation
       wasSuccessful, wrongGuesses, // Game Result
       likertAnswers, starRating, // Feedback
     } = body;
@@ -18,9 +17,6 @@ export async function POST(request: Request) {
 
     const gameSession = await prisma.gameSession.create({
       data: {
-        city,
-        region,
-        country,
         wasSuccessful,
         wrongGuesses,
         likertAnswers,

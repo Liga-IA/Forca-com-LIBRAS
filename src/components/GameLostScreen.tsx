@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { LogOut, Send } from 'lucide-react';
 import Link from 'next/link';
 import { FeedbackForm } from './FeedbackForm';
-import { GeolocationService } from '@/lib/geolocation';
 
 interface GameLostScreenProps {
   word: string;
@@ -17,17 +16,11 @@ const GameLostScreen = ({ word, wrongGuesses, onPlayAgain }: GameLostScreenProps
 
   const handleFeedbackSubmit = async (answers: { likert: Record<number, number>, stars: number }) => {
     try {
-      const ip = await GeolocationService.getUserIP();
-      const location = ip ? await GeolocationService.getLocationByIP(ip) : null;
-
       const payload = {
         wasSuccessful: false,
         wrongGuesses,
         likertAnswers: answers.likert,
         starRating: answers.stars,
-        city: location?.city,
-        region: location?.regionName,
-        country: location?.country,
       };
 
       await fetch('/api/game-session', {
@@ -47,17 +40,11 @@ const GameLostScreen = ({ word, wrongGuesses, onPlayAgain }: GameLostScreenProps
 
   const handleSkipAndSave = async () => {
     try {
-      const ip = await GeolocationService.getUserIP();
-      const location = ip ? await GeolocationService.getLocationByIP(ip) : null;
-
       const payload = {
         wasSuccessful: false,
         wrongGuesses,
         likertAnswers: null,
         starRating: null,
-        city: location?.city,
-        region: location?.regionName,
-        country: location?.country,
       };
 
       await fetch('/api/game-session', {
