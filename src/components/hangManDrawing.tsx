@@ -1,5 +1,4 @@
 export const HangmanDrawing = ({ wrongCount }: { wrongCount: number }) => {
-  const parts = ["head", "body", "leftArm", "rightArm", "leftLeg", "rightLeg"];
 
   return (
     <div className="relative w-44 h-56 lg:w-56 lg:h-57 mx-auto">

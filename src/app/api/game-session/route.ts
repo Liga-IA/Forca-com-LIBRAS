@@ -11,9 +11,9 @@ export async function POST(request: Request) {
       likertAnswers, starRating, // Feedback
     } = body;
 
-    // Basic validation
-    if (typeof wasSuccessful !== 'boolean' || !Array.isArray(wrongGuesses) || typeof starRating !== 'number') {
-      return NextResponse.json({ error: 'Invalid data format' }, { status: 400 });
+    // Basic validation for required fields
+    if (typeof wasSuccessful !== 'boolean' || !Array.isArray(wrongGuesses)) {
+      return NextResponse.json({ error: 'Invalid data format for required fields' }, { status: 400 });
     }
 
     const gameSession = await prisma.gameSession.create({

@@ -43,7 +43,7 @@ export function FeedbackForm({ onSubmit }: FeedbackFormProps) {
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-cyan-400">Feedback da Partida</h2>
         <p className="mt-2 text-slate-300 max-w-3xl mx-auto">
-          A Liga Acadêmica de Inteligência Artificial (LIA) e o Projeto IRIS estão desenvolvendo um estudo sobre educação inclusiva. Suas respostas anônimas são essenciais para entendermos quão bem nosso jogo auxilia no aprendizado de LIBRAS.
+          A Liga Acadêmica de Inteligência Artificial (LIA) e o Projeto IRIS estão desenvolvendo um estudo sobre educação inclusiva. Suas respostas anônimas são essenciais para entendermos quão bem nosso jogo auxilia no aprendizado de LIBRAS. Responda quantas vezes quiser, à medida que sua habilidade com LIBRAS for evoluindo!
         </p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-8">

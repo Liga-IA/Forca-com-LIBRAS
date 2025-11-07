@@ -22,6 +22,6 @@ model GameSession {
   wrongGuesses  String[]
 
   // Feedback
-  likertAnswers Json
-  starRating    Int
+  likertAnswers Json?
+  starRating    Int?
 }

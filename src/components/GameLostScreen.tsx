@@ -45,6 +45,37 @@ const GameLostScreen = ({ word, wrongGuesses, onPlayAgain }: GameLostScreenProps
     }
   };
 
+  const handleSkipAndSave = async () => {
+    try {
+      const ip = await GeolocationService.getUserIP();
+      const location = ip ? await GeolocationService.getLocationByIP(ip) : null;
+
+      const payload = {
+        wasSuccessful: false,
+        wrongGuesses,
+        likertAnswers: null,
+        starRating: null,
+        city: location?.city,
+        region: location?.regionName,
+        country: location?.country,
+      };
+
+      await fetch('/api/game-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+    } catch (error) {
+      console.error("Failed to save skipped session:", error);
+    } finally {
+      onPlayAgain();
+    }
+  };
+
+
   if (view === 'feedback') {
     return <FeedbackForm onSubmit={handleFeedbackSubmit} />;
   }
@@ -84,7 +115,7 @@ const GameLostScreen = ({ word, wrongGuesses, onPlayAgain }: GameLostScreenProps
           </Link>
         </div>
         <button
-          onClick={onPlayAgain}
+          onClick={handleSkipAndSave}
           className="text-sm text-slate-400 hover:text-white mt-6 bg-transparent border-none"
         >
           Pular feedback e tentar novamente
