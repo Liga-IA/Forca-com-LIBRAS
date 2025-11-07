@@ -43,7 +43,7 @@ export class GeolocationService {
 
   static async getLocationByIP(ip: string): Promise<GeolocationData | null> {
     try {
-      const response = await fetch(`http://ip-api.com/json/${ip}`);
+      const response = await fetch(`https://ip-api.com/json/${ip}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
