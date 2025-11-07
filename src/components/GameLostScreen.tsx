@@ -1,14 +1,54 @@
-"use client";
+'use client';
 
-import { LogOut, Repeat } from "lucide-react";
-import Link from "next/link";
+import { useState } from 'react';
+import { LogOut, Send } from 'lucide-react';
+import Link from 'next/link';
+import { FeedbackForm } from './FeedbackForm';
+import { GeolocationService } from '@/lib/geolocation';
 
 interface GameLostScreenProps {
   word: string;
+  wrongGuesses: string[];
   onPlayAgain: () => void;
 }
 
-const GameLostScreen = ({ word, onPlayAgain }: GameLostScreenProps) => {
+const GameLostScreen = ({ word, wrongGuesses, onPlayAgain }: GameLostScreenProps) => {
+  const [view, setView] = useState<'result' | 'feedback'>('result');
+
+  const handleFeedbackSubmit = async (answers: { likert: Record<number, number>, stars: number }) => {
+    try {
+      const ip = await GeolocationService.getUserIP();
+      const location = ip ? await GeolocationService.getLocationByIP(ip) : null;
+
+      const payload = {
+        wasSuccessful: false,
+        wrongGuesses,
+        likertAnswers: answers.likert,
+        starRating: answers.stars,
+        city: location?.city,
+        region: location?.regionName,
+        country: location?.country,
+      };
+
+      await fetch('/api/game-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+    } catch (error) {
+      console.error("Failed to submit feedback:", error);
+    } finally {
+      onPlayAgain();
+    }
+  };
+
+  if (view === 'feedback') {
+    return <FeedbackForm onSubmit={handleFeedbackSubmit} />;
+  }
+
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur">
       <div className="text-center text-white animate-fade-in mx-auto p-8">
@@ -31,19 +71,24 @@ const GameLostScreen = ({ word, onPlayAgain }: GameLostScreenProps) => {
 
         <div className="flex justify-center space-x-4">
           <button
-            onClick={onPlayAgain}
-            className="flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+            onClick={() => setView('feedback')}
+            className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
-            <Repeat className="mr-2" />
-            <p> Tentar Novamente</p>
+            <Send className="mr-2" /> <p>Deixar Feedback</p>
           </button>
           <Link
             href="/"
-            className="flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+            className="flex items-center justify-center bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             <LogOut className="mr-2" /> <p>Sair do jogo</p>
           </Link>
         </div>
+        <button
+          onClick={onPlayAgain}
+          className="text-sm text-slate-400 hover:text-white mt-6 bg-transparent border-none"
+        >
+          Pular feedback e tentar novamente
+        </button>
       </div>
     </div>
   );

@@ -1,15 +1,55 @@
-"use client";
+'use client';
 
-import { LogOut, Repeat } from "lucide-react";
-import Link from "next/link";
+import { useState } from 'react';
+import { LogOut, Repeat, Send } from 'lucide-react';
+import Link from 'next/link';
+import { FeedbackForm } from './FeedbackForm';
+import { GeolocationService } from '@/lib/geolocation';
 
 interface GameWonScreenProps {
   score: number;
   word: string;
+  wrongGuesses: string[];
   onPlayAgain: () => void;
 }
 
-const GameWonScreen = ({ score, word, onPlayAgain }: GameWonScreenProps) => {
+const GameWonScreen = ({ score, word, wrongGuesses, onPlayAgain }: GameWonScreenProps) => {
+  const [view, setView] = useState<'result' | 'feedback'>('result');
+
+  const handleFeedbackSubmit = async (answers: { likert: Record<number, number>, stars: number }) => {
+    try {
+      const ip = await GeolocationService.getUserIP();
+      const location = ip ? await GeolocationService.getLocationByIP(ip) : null;
+
+      const payload = {
+        wasSuccessful: true,
+        wrongGuesses,
+        likertAnswers: answers.likert,
+        starRating: answers.stars,
+        city: location?.city,
+        region: location?.regionName,
+        country: location?.country,
+      };
+
+      await fetch('/api/game-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+    } catch (error) {
+      console.error("Failed to submit feedback:", error);
+    } finally {
+      onPlayAgain();
+    }
+  };
+
+  if (view === 'feedback') {
+    return <FeedbackForm onSubmit={handleFeedbackSubmit} />;
+  }
+
   return (
     <div className="text-center text-white animate-fade-in">
       <h2 className="text-6xl font-bold mb-2 text-yellow-400">Você Venceu!</h2>
@@ -17,18 +57,18 @@ const GameWonScreen = ({ score, word, onPlayAgain }: GameWonScreenProps) => {
       <p className="text-xl mb-2">
         A palavra era: <span className="font-bold text-cyan-400">{word}</span>
       </p>
-      <p className="text-xl mb-6">
+      {/* Comentado: exibição de pontuação final desabilitada por enquanto */}
+      {/* <p className="text-xl mb-6">
         Sua pontuação final:{" "}
         <span className="font-bold text-yellow-400">{score}</span>
-      </p>
+      </p> */}
 
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-center space-x-4 mt-8">
         <button
-          onClick={onPlayAgain}
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-2xl transition-transform transform hover:scale-105"
+          onClick={() => setView('feedback')}
+          className="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
         >
-          <Repeat className="mr-2" />
-          <p>Jogar novamente</p>
+          <Send className="mr-2" /> <p>Deixar Feedback</p>
         </button>
         <Link
           href="/"
@@ -37,8 +77,15 @@ const GameWonScreen = ({ score, word, onPlayAgain }: GameWonScreenProps) => {
           <LogOut className="mr-2" /> <p>Sair do jogo</p>
         </Link>
       </div>
+      <button
+        onClick={onPlayAgain}
+        className="text-sm text-slate-400 hover:text-white mt-6 bg-transparent border-none"
+      >
+        Pular feedback e jogar novamente
+      </button>
     </div>
   );
 };
 
 export default GameWonScreen;
+

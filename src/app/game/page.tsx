@@ -1,5 +1,6 @@
 "use client";
 import { AdviseModal } from "@/components/adviseModal";
+import { TipsModal } from "@/components/TipsModal";
 import GameCanvas from "@/components/GameCanvas";
 import GameLostScreen from "@/components/GameLostScreen";
 import GameWonScreen from "@/components/GameWonScreen";
@@ -9,21 +10,49 @@ import { WrongLettersDisplay } from "@/components/wrongLattersDisplay";
 import { setMetrics } from "@/lib/metrics";
 import { challenges } from "@/utils/dictionary";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 
-const getRandomChallenge = () => {
-  const randomIndex = Math.floor(Math.random() * challenges.length);
-  return challenges[randomIndex];
+/**
+ * Seleciona um desafio aleatório com distribuição uniforme
+ * Evita repetir a palavra anterior para melhorar a experiência
+ */
+const getRandomChallenge = (previousWord: string | null = null) => {
+  // Se há apenas uma palavra, retorna ela
+  if (challenges.length === 1) {
+    return challenges[0];
+  }
+
+  // Filtra palavras diferentes da anterior (se houver)
+  const availableChallenges = previousWord
+    ? challenges.filter((c) => c.word !== previousWord)
+    : challenges;
+
+  // Se após filtrar não sobrar nenhuma (caso extremo), usa todas
+  const candidates = availableChallenges.length > 0 ? availableChallenges : challenges;
+
+  // Gera índice aleatório com distribuição uniforme
+  // Usa Math.random() que gera número entre [0, 1)
+  // Multiplica pelo comprimento para obter [0, length)
+  // Math.floor arredonda para baixo, garantindo índice válido [0, length-1]
+  const randomIndex = Math.floor(Math.random() * candidates.length);
+  
+  return candidates[randomIndex];
 };
 
 export default function GamePage() {
-  const [challenge, setChallenge] = useState(getRandomChallenge());
+  const previousWordRef = useRef<string | null>(null);
+  const [challenge, setChallenge] = useState(() => {
+    const initialChallenge = getRandomChallenge(null);
+    previousWordRef.current = initialChallenge.word;
+    return initialChallenge;
+  });
   const [guessedLetters, setGuessedLetters] = useState(new Set<string>());
   const [wrongLetters, setWrongLetters] = useState<string[]>([]);
   const [lives, setLives] = useState(6);
-  const [score, setScore] = useState(0);
+  // const [score, setScore] = useState(0); // Comentado: sistema de pontuação desabilitado por enquanto
   const [combo, setCombo] = useState(0);
   const [initAdviseModal, setInitAdviseModal] = useState(false);
+  const [isTipsModalOpen, setTipsModalOpen] = useState(false);
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
     "playing"
   );
@@ -34,13 +63,16 @@ export default function GamePage() {
   const [showParticles, setShowParticles] = useState(false);
 
   const handlePlayAgain = () => {
-    setChallenge(getRandomChallenge());
+    const newChallenge = getRandomChallenge(previousWordRef.current);
+    previousWordRef.current = newChallenge.word;
+    setChallenge(newChallenge);
     setGuessedLetters(new Set<string>());
     setWrongLetters([]);
     setLives(6);
     setCombo(0);
     setGameState("playing");
     setShowParticles(false);
+    // setScore(0); // Comentado: reset de pontuação desabilitado
     setMetrics();
   };
 
@@ -63,9 +95,10 @@ export default function GamePage() {
         newGuessedLetters.add(sign);
         setGuessedLetters(newGuessedLetters);
 
-        const comboMultiplier = Math.min(combo + 1, 5);
-        const points = 10 * comboMultiplier;
-        setScore((prevScore) => prevScore + points);
+        // Comentado: sistema de pontuação desabilitado por enquanto
+        // const comboMultiplier = Math.min(combo + 1, 5);
+        // const points = 10 * comboMultiplier;
+        // setScore((prevScore) => prevScore + points);
         setCombo((prev) => prev + 1);
         setShowParticles(true);
         setTimeout(() => setShowParticles(false), 1000);
@@ -99,13 +132,15 @@ export default function GamePage() {
 
     if (allLettersGuessed && guessedLetters.size > 0) {
       setGameState("won");
-      setScore((prev) => prev + lives * 50 + combo * 25);
+      // Comentado: pontuação adicional ao ganhar desabilitada
+      // setScore((prev) => prev + lives * 50 + combo * 25);
     }
   }, [lives, guessedLetters, challenge.word, gameState, combo]);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
       <AdviseModal isOpen={initAdviseModal} />
+      <TipsModal isOpen={isTipsModalOpen} onClose={() => setTipsModalOpen(false)} />
       {/* Particles background */}
       <div className="absolute inset-0 bg-[url('/stars.png')] opacity-20 animate-float"></div>
 
@@ -131,14 +166,21 @@ export default function GamePage() {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-6 items-center">
-            <div className="bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full px-6 py-2">
+            <button
+              onClick={() => setTipsModalOpen(true)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
+            >
+              Dicas
+            </button>
+            {/* Comentado: exibição de pontuação desabilitada por enquanto */}
+            {/* <div className="bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full px-6 py-2">
               <span className="text-xl font-bold">✨ {score}</span>
               {combo > 1 && (
                 <span className="ml-2 text-sm bg-white/20 rounded-full px-2 py-1">
                   Combo x{combo}
                 </span>
               )}
-            </div>
+            </div> */}
           </div>
         </header>
         {gameState === "won" && (
@@ -147,8 +189,10 @@ export default function GamePage() {
             style={{ minHeight: "60vh" }}
           >
             <GameWonScreen
-              score={score}
+              score={0}
+              // score={score} // Comentado: pontuação desabilitada, passando 0 como valor fixo
               word={challenge.word}
+              wrongGuesses={wrongLetters}
               onPlayAgain={handlePlayAgain}
             />
           </div>
@@ -161,6 +205,7 @@ export default function GamePage() {
           >
             <GameLostScreen
               word={challenge.word}
+              wrongGuesses={wrongLetters}
               onPlayAgain={handlePlayAgain}
             />
           </div>
