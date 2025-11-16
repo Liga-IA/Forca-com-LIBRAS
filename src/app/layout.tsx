@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Forca com LIBRAS",
+  title: "IRIS - Interface de Reconhecimento Interactivo de Sinais",
   description:
     "Jogue a Forca com LIBRAS, uma versão do jogo Forca com tradução para Libras",
 };

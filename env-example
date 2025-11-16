@@ -1,4 +1,13 @@
-POSTGRES_USER="iris"
-POSTGRES_PASSWORD="iris_2025"
-POSTGRES_DB="iris_db"
-DATABASE_URL="postgresql://iris:iris_2025@localhost:5482/iris_db?schema=public"
+
+# Postgres
+POSTGRES_USER=meu_usuario
+POSTGRES_PASSWORD=senha_forte_e_complexa123!
+POSTGRES_DB=meu_banco
+
+# PGAdmin
+PGADMIN_EMAIL=admin@exemplo.com
+PGADMIN_PASSWORD=senha_pgadmin_forte
+
+# Opcional: URL que sua app Next.js usará localmente na VPS
+# (em production, mantenha este DATABASE_URL no environment do service do Next.js / systemd)
+DATABASE_URL=postgresql://meu_usuario:senha_forte_e_complexa123!@localhost:5460/meu_banco
