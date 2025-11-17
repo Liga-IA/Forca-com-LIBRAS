@@ -1,4 +1,4 @@
-image:  docker:cli
+image:  docker:27-cli
 stages:
   - build
   - portainer
