@@ -1,5 +1,4 @@
-image: gcr.io/kaniko-project/executor:latest
-
+image:  docker:cli
 stages:
   - build
   - portainer
