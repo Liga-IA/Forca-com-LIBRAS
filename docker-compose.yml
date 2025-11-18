@@ -41,7 +41,7 @@ services:
   migrate:
     build:
       context: .
-      dockerfile: Dockerfile 
+      dockerfile: dockerfile 
     command: sh -c "npx prisma migrate deploy"
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public"
@@ -52,7 +52,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile 
+      dockerfile: dockerfile 
     environment:
       NODE_ENV: production
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public"
