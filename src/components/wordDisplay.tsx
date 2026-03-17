@@ -1,7 +1,7 @@
 export const WordDisplay = ({
   word,
   guessedLetters,
-  wrongGuesses,
+  // wrongGuesses,
 }: {
   word: string;
   guessedLetters: Set<string>;

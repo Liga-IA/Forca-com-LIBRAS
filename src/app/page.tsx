@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const handleStartGame = async () => {
     router.push("/game");
   };

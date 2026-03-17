@@ -25,7 +25,7 @@ export default function GamePage() {
   const [combo, setCombo] = useState(0);
   const [initAdviseModal, setInitAdviseModal] = useState(false);
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
-    "playing"
+    "playing",
   );
 
   const [realTimeDetectedSign, setRealTimeDetectedSign] = useState<
@@ -79,7 +79,7 @@ export default function GamePage() {
         setCombo(0);
       }
     },
-    [gameState, guessedLetters, wrongLetters, challenge.word, combo]
+    [gameState, guessedLetters, wrongLetters, challenge.word, combo],
   );
 
   // Abre o modal ao carregar a página e fecha automaticamente após 5s
@@ -234,7 +234,7 @@ export default function GamePage() {
               {/* Challenge Info */}
               <div className="bg-slate-800/40 backdrop-blur rounded-2xl p-6 border border-slate-600/50">
                 <div className="w-full h-48 bg-slate-700/50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
-                  <img
+                  <Image
                     src={challenge.image}
                     alt={challenge.description}
                     className="h-full w-full object-contain transition-transform hover:scale-110"
@@ -248,15 +248,15 @@ export default function GamePage() {
                         challenge.difficulty === "easy"
                           ? "bg-green-500/20 text-green-300"
                           : challenge.difficulty === "medium"
-                          ? "bg-yellow-500/20 text-yellow-300"
-                          : "bg-red-500/20 text-red-300"
+                            ? "bg-yellow-500/20 text-yellow-300"
+                            : "bg-red-500/20 text-red-300"
                       }`}
                     >
                       {challenge.difficulty === "easy"
                         ? "🟢 Fácil"
                         : challenge.difficulty === "medium"
-                        ? "🟡 Médio"
-                        : "🔴 Difícil"}
+                          ? "🟡 Médio"
+                          : "🔴 Difícil"}
                     </span>
                   </div>
 
