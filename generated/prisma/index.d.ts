@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/client.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -14,15 +14,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Analytics
+ * Model GameSession
  * 
  */
-export type Analytics = $Result.DefaultSelection<Prisma.$AnalyticsPayload>
-/**
- * Model Metrics
- * 
- */
-export type Metrics = $Result.DefaultSelection<Prisma.$MetricsPayload>
+export type GameSession = $Result.DefaultSelection<Prisma.$GameSessionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -30,13 +25,15 @@ export type Metrics = $Result.DefaultSelection<Prisma.$MetricsPayload>
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
- * // Fetch zero or more Analytics
- * const analytics = await prisma.analytics.findMany()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
+ * // Fetch zero or more GameSessions
+ * const gameSessions = await prisma.gameSession.findMany()
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
@@ -51,13 +48,15 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
-   * // Fetch zero or more Analytics
-   * const analytics = await prisma.analytics.findMany()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
+   * // Fetch zero or more GameSessions
+   * const gameSessions = await prisma.gameSession.findMany()
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
@@ -80,7 +79,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -92,7 +91,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -103,7 +102,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -115,7 +114,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -131,36 +130,25 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
-
 
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
   }>>
 
       /**
-   * `prisma.analytics`: Exposes CRUD operations for the **Analytics** model.
+   * `prisma.gameSession`: Exposes CRUD operations for the **GameSession** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Analytics
-    * const analytics = await prisma.analytics.findMany()
+    * // Fetch zero or more GameSessions
+    * const gameSessions = await prisma.gameSession.findMany()
     * ```
     */
-  get analytics(): Prisma.AnalyticsDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.metrics`: Exposes CRUD operations for the **Metrics** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Metrics
-    * const metrics = await prisma.metrics.findMany()
-    * ```
-    */
-  get metrics(): Prisma.MetricsDelegate<ExtArgs, ClientOptions>;
+  get gameSession(): Prisma.GameSessionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -201,14 +189,6 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
-   */
-  export type Metrics = runtime.Metrics
-  export type Metric<T> = runtime.Metric<T>
-  export type MetricHistogram = runtime.MetricHistogram
-  export type MetricHistogramBucket = runtime.MetricHistogramBucket
-
-  /**
   * Extensions
   */
   export import Extension = $Extensions.UserArgs
@@ -219,11 +199,12 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.17.1
-   * Query Engine version: 272a37d34178c2894197e17273bf937f25acdeac
+   * Prisma Client JS version: 7.7.0
+   * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
    */
   export type PrismaVersion = {
     client: string
+    engine: string
   }
 
   export const prismaVersion: PrismaVersion
@@ -233,6 +214,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -601,16 +583,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Analytics: 'Analytics',
-    Metrics: 'Metrics'
+    GameSession: 'GameSession'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-  export type Datasources = {
-    db?: Datasource
-  }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
@@ -621,155 +599,81 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "analytics" | "metrics"
+      modelProps: "gameSession"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Analytics: {
-        payload: Prisma.$AnalyticsPayload<ExtArgs>
-        fields: Prisma.AnalyticsFieldRefs
+      GameSession: {
+        payload: Prisma.$GameSessionPayload<ExtArgs>
+        fields: Prisma.GameSessionFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AnalyticsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload> | null
+            args: Prisma.GameSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AnalyticsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           findFirst: {
-            args: Prisma.AnalyticsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload> | null
+            args: Prisma.GameSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AnalyticsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           findMany: {
-            args: Prisma.AnalyticsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>[]
+            args: Prisma.GameSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>[]
           }
           create: {
-            args: Prisma.AnalyticsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           createMany: {
-            args: Prisma.AnalyticsCreateManyArgs<ExtArgs>
+            args: Prisma.GameSessionCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AnalyticsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>[]
+            args: Prisma.GameSessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>[]
           }
           delete: {
-            args: Prisma.AnalyticsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           update: {
-            args: Prisma.AnalyticsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           deleteMany: {
-            args: Prisma.AnalyticsDeleteManyArgs<ExtArgs>
+            args: Prisma.GameSessionDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AnalyticsUpdateManyArgs<ExtArgs>
+            args: Prisma.GameSessionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AnalyticsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>[]
+            args: Prisma.GameSessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>[]
           }
           upsert: {
-            args: Prisma.AnalyticsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AnalyticsPayload>
+            args: Prisma.GameSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameSessionPayload>
           }
           aggregate: {
-            args: Prisma.AnalyticsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAnalytics>
+            args: Prisma.GameSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGameSession>
           }
           groupBy: {
-            args: Prisma.AnalyticsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AnalyticsGroupByOutputType>[]
+            args: Prisma.GameSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GameSessionGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AnalyticsCountArgs<ExtArgs>
-            result: $Utils.Optional<AnalyticsCountAggregateOutputType> | number
-          }
-        }
-      }
-      Metrics: {
-        payload: Prisma.$MetricsPayload<ExtArgs>
-        fields: Prisma.MetricsFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.MetricsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.MetricsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          findFirst: {
-            args: Prisma.MetricsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.MetricsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          findMany: {
-            args: Prisma.MetricsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>[]
-          }
-          create: {
-            args: Prisma.MetricsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          createMany: {
-            args: Prisma.MetricsCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.MetricsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>[]
-          }
-          delete: {
-            args: Prisma.MetricsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          update: {
-            args: Prisma.MetricsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          deleteMany: {
-            args: Prisma.MetricsDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.MetricsUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.MetricsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>[]
-          }
-          upsert: {
-            args: Prisma.MetricsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MetricsPayload>
-          }
-          aggregate: {
-            args: Prisma.MetricsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMetrics>
-          }
-          groupBy: {
-            args: Prisma.MetricsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MetricsGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.MetricsCountArgs<ExtArgs>
-            result: $Utils.Optional<MetricsCountAggregateOutputType> | number
+            args: Prisma.GameSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<GameSessionCountAggregateOutputType> | number
           }
         }
       }
@@ -802,14 +706,6 @@ export namespace Prisma {
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasources?: Datasources
-    /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasourceUrl?: string
-    /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
@@ -835,7 +731,7 @@ export namespace Prisma {
      *  { emit: 'stdout', level: 'error' }
      * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -851,7 +747,11 @@ export namespace Prisma {
     /**
      * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
      */
-    adapter?: runtime.SqlDriverAdapterFactory | null
+    adapter?: runtime.SqlDriverAdapterFactory
+    /**
+     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     */
+    accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -867,10 +767,25 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
-    analytics?: AnalyticsOmit
-    metrics?: MetricsOmit
+    gameSession?: GameSessionOmit
   }
 
   /* Types for Logging */
@@ -946,407 +861,355 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type AnalyticsCountOutputType
-   */
-
-  export type AnalyticsCountOutputType = {
-    metrics: number
-  }
-
-  export type AnalyticsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    metrics?: boolean | AnalyticsCountOutputTypeCountMetricsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AnalyticsCountOutputType without action
-   */
-  export type AnalyticsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AnalyticsCountOutputType
-     */
-    select?: AnalyticsCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AnalyticsCountOutputType without action
-   */
-  export type AnalyticsCountOutputTypeCountMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MetricsWhereInput
-  }
-
 
   /**
    * Models
    */
 
   /**
-   * Model Analytics
+   * Model GameSession
    */
 
-  export type AggregateAnalytics = {
-    _count: AnalyticsCountAggregateOutputType | null
-    _min: AnalyticsMinAggregateOutputType | null
-    _max: AnalyticsMaxAggregateOutputType | null
+  export type AggregateGameSession = {
+    _count: GameSessionCountAggregateOutputType | null
+    _min: GameSessionMinAggregateOutputType | null
+    _max: GameSessionMaxAggregateOutputType | null
   }
 
-  export type AnalyticsMinAggregateOutputType = {
-    analyticsId: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    cityIp: string | null
-    country: string | null
+  export type GameSessionMinAggregateOutputType = {
+    id: string | null
+    playedAt: Date | null
+    result: string | null
+    city: string | null
     state: string | null
-    region: string | null
-  }
-
-  export type AnalyticsMaxAggregateOutputType = {
-    analyticsId: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    cityIp: string | null
     country: string | null
-    state: string | null
-    region: string | null
   }
 
-  export type AnalyticsCountAggregateOutputType = {
-    analyticsId: number
-    createdAt: number
-    updatedAt: number
-    cityIp: number
-    country: number
+  export type GameSessionMaxAggregateOutputType = {
+    id: string | null
+    playedAt: Date | null
+    result: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+  }
+
+  export type GameSessionCountAggregateOutputType = {
+    id: number
+    playedAt: number
+    result: number
+    city: number
     state: number
-    region: number
+    country: number
     _all: number
   }
 
 
-  export type AnalyticsMinAggregateInputType = {
-    analyticsId?: true
-    createdAt?: true
-    updatedAt?: true
-    cityIp?: true
-    country?: true
+  export type GameSessionMinAggregateInputType = {
+    id?: true
+    playedAt?: true
+    result?: true
+    city?: true
     state?: true
-    region?: true
+    country?: true
   }
 
-  export type AnalyticsMaxAggregateInputType = {
-    analyticsId?: true
-    createdAt?: true
-    updatedAt?: true
-    cityIp?: true
-    country?: true
+  export type GameSessionMaxAggregateInputType = {
+    id?: true
+    playedAt?: true
+    result?: true
+    city?: true
     state?: true
-    region?: true
+    country?: true
   }
 
-  export type AnalyticsCountAggregateInputType = {
-    analyticsId?: true
-    createdAt?: true
-    updatedAt?: true
-    cityIp?: true
-    country?: true
+  export type GameSessionCountAggregateInputType = {
+    id?: true
+    playedAt?: true
+    result?: true
+    city?: true
     state?: true
-    region?: true
+    country?: true
     _all?: true
   }
 
-  export type AnalyticsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Analytics to aggregate.
+     * Filter which GameSession to aggregate.
      */
-    where?: AnalyticsWhereInput
+    where?: GameSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Analytics to fetch.
+     * Determine the order of GameSessions to fetch.
      */
-    orderBy?: AnalyticsOrderByWithRelationInput | AnalyticsOrderByWithRelationInput[]
+    orderBy?: GameSessionOrderByWithRelationInput | GameSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AnalyticsWhereUniqueInput
+    cursor?: GameSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Analytics from the position of the cursor.
+     * Take `±n` GameSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Analytics.
+     * Skip the first `n` GameSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Analytics
+     * Count returned GameSessions
     **/
-    _count?: true | AnalyticsCountAggregateInputType
+    _count?: true | GameSessionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AnalyticsMinAggregateInputType
+    _min?: GameSessionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AnalyticsMaxAggregateInputType
+    _max?: GameSessionMaxAggregateInputType
   }
 
-  export type GetAnalyticsAggregateType<T extends AnalyticsAggregateArgs> = {
-        [P in keyof T & keyof AggregateAnalytics]: P extends '_count' | 'count'
+  export type GetGameSessionAggregateType<T extends GameSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateGameSession]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAnalytics[P]>
-      : GetScalarType<T[P], AggregateAnalytics[P]>
+        : GetScalarType<T[P], AggregateGameSession[P]>
+      : GetScalarType<T[P], AggregateGameSession[P]>
   }
 
 
 
 
-  export type AnalyticsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AnalyticsWhereInput
-    orderBy?: AnalyticsOrderByWithAggregationInput | AnalyticsOrderByWithAggregationInput[]
-    by: AnalyticsScalarFieldEnum[] | AnalyticsScalarFieldEnum
-    having?: AnalyticsScalarWhereWithAggregatesInput
+  export type GameSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameSessionWhereInput
+    orderBy?: GameSessionOrderByWithAggregationInput | GameSessionOrderByWithAggregationInput[]
+    by: GameSessionScalarFieldEnum[] | GameSessionScalarFieldEnum
+    having?: GameSessionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AnalyticsCountAggregateInputType | true
-    _min?: AnalyticsMinAggregateInputType
-    _max?: AnalyticsMaxAggregateInputType
+    _count?: GameSessionCountAggregateInputType | true
+    _min?: GameSessionMinAggregateInputType
+    _max?: GameSessionMaxAggregateInputType
   }
 
-  export type AnalyticsGroupByOutputType = {
-    analyticsId: string
-    createdAt: Date
-    updatedAt: Date
-    cityIp: string
-    country: string
+  export type GameSessionGroupByOutputType = {
+    id: string
+    playedAt: Date
+    result: string
+    city: string
     state: string
-    region: string
-    _count: AnalyticsCountAggregateOutputType | null
-    _min: AnalyticsMinAggregateOutputType | null
-    _max: AnalyticsMaxAggregateOutputType | null
+    country: string
+    _count: GameSessionCountAggregateOutputType | null
+    _min: GameSessionMinAggregateOutputType | null
+    _max: GameSessionMaxAggregateOutputType | null
   }
 
-  type GetAnalyticsGroupByPayload<T extends AnalyticsGroupByArgs> = Prisma.PrismaPromise<
+  type GetGameSessionGroupByPayload<T extends GameSessionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AnalyticsGroupByOutputType, T['by']> &
+      PickEnumerable<GameSessionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AnalyticsGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof GameSessionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AnalyticsGroupByOutputType[P]>
-            : GetScalarType<T[P], AnalyticsGroupByOutputType[P]>
+              : GetScalarType<T[P], GameSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], GameSessionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AnalyticsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    analyticsId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    cityIp?: boolean
-    country?: boolean
+  export type GameSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playedAt?: boolean
+    result?: boolean
+    city?: boolean
     state?: boolean
-    region?: boolean
-    metrics?: boolean | Analytics$metricsArgs<ExtArgs>
-    _count?: boolean | AnalyticsCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["analytics"]>
+    country?: boolean
+  }, ExtArgs["result"]["gameSession"]>
 
-  export type AnalyticsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    analyticsId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    cityIp?: boolean
-    country?: boolean
+  export type GameSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playedAt?: boolean
+    result?: boolean
+    city?: boolean
     state?: boolean
-    region?: boolean
-  }, ExtArgs["result"]["analytics"]>
+    country?: boolean
+  }, ExtArgs["result"]["gameSession"]>
 
-  export type AnalyticsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    analyticsId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    cityIp?: boolean
-    country?: boolean
+  export type GameSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playedAt?: boolean
+    result?: boolean
+    city?: boolean
     state?: boolean
-    region?: boolean
-  }, ExtArgs["result"]["analytics"]>
+    country?: boolean
+  }, ExtArgs["result"]["gameSession"]>
 
-  export type AnalyticsSelectScalar = {
-    analyticsId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    cityIp?: boolean
-    country?: boolean
+  export type GameSessionSelectScalar = {
+    id?: boolean
+    playedAt?: boolean
+    result?: boolean
+    city?: boolean
     state?: boolean
-    region?: boolean
+    country?: boolean
   }
 
-  export type AnalyticsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"analyticsId" | "createdAt" | "updatedAt" | "cityIp" | "country" | "state" | "region", ExtArgs["result"]["analytics"]>
-  export type AnalyticsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    metrics?: boolean | Analytics$metricsArgs<ExtArgs>
-    _count?: boolean | AnalyticsCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type AnalyticsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AnalyticsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type GameSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playedAt" | "result" | "city" | "state" | "country", ExtArgs["result"]["gameSession"]>
 
-  export type $AnalyticsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Analytics"
-    objects: {
-      metrics: Prisma.$MetricsPayload<ExtArgs>[]
-    }
+  export type $GameSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GameSession"
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      analyticsId: string
-      createdAt: Date
-      updatedAt: Date
-      cityIp: string
-      country: string
+      id: string
+      playedAt: Date
+      result: string
+      city: string
       state: string
-      region: string
-    }, ExtArgs["result"]["analytics"]>
+      country: string
+    }, ExtArgs["result"]["gameSession"]>
     composites: {}
   }
 
-  type AnalyticsGetPayload<S extends boolean | null | undefined | AnalyticsDefaultArgs> = $Result.GetResult<Prisma.$AnalyticsPayload, S>
+  type GameSessionGetPayload<S extends boolean | null | undefined | GameSessionDefaultArgs> = $Result.GetResult<Prisma.$GameSessionPayload, S>
 
-  type AnalyticsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AnalyticsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AnalyticsCountAggregateInputType | true
+  type GameSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GameSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GameSessionCountAggregateInputType | true
     }
 
-  export interface AnalyticsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Analytics'], meta: { name: 'Analytics' } }
+  export interface GameSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GameSession'], meta: { name: 'GameSession' } }
     /**
-     * Find zero or one Analytics that matches the filter.
-     * @param {AnalyticsFindUniqueArgs} args - Arguments to find a Analytics
+     * Find zero or one GameSession that matches the filter.
+     * @param {GameSessionFindUniqueArgs} args - Arguments to find a GameSession
      * @example
-     * // Get one Analytics
-     * const analytics = await prisma.analytics.findUnique({
+     * // Get one GameSession
+     * const gameSession = await prisma.gameSession.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AnalyticsFindUniqueArgs>(args: SelectSubset<T, AnalyticsFindUniqueArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends GameSessionFindUniqueArgs>(args: SelectSubset<T, GameSessionFindUniqueArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Analytics that matches the filter or throw an error with `error.code='P2025'`
+     * Find one GameSession that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AnalyticsFindUniqueOrThrowArgs} args - Arguments to find a Analytics
+     * @param {GameSessionFindUniqueOrThrowArgs} args - Arguments to find a GameSession
      * @example
-     * // Get one Analytics
-     * const analytics = await prisma.analytics.findUniqueOrThrow({
+     * // Get one GameSession
+     * const gameSession = await prisma.gameSession.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AnalyticsFindUniqueOrThrowArgs>(args: SelectSubset<T, AnalyticsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends GameSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, GameSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Analytics that matches the filter.
+     * Find the first GameSession that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsFindFirstArgs} args - Arguments to find a Analytics
+     * @param {GameSessionFindFirstArgs} args - Arguments to find a GameSession
      * @example
-     * // Get one Analytics
-     * const analytics = await prisma.analytics.findFirst({
+     * // Get one GameSession
+     * const gameSession = await prisma.gameSession.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AnalyticsFindFirstArgs>(args?: SelectSubset<T, AnalyticsFindFirstArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends GameSessionFindFirstArgs>(args?: SelectSubset<T, GameSessionFindFirstArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Analytics that matches the filter or
+     * Find the first GameSession that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsFindFirstOrThrowArgs} args - Arguments to find a Analytics
+     * @param {GameSessionFindFirstOrThrowArgs} args - Arguments to find a GameSession
      * @example
-     * // Get one Analytics
-     * const analytics = await prisma.analytics.findFirstOrThrow({
+     * // Get one GameSession
+     * const gameSession = await prisma.gameSession.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AnalyticsFindFirstOrThrowArgs>(args?: SelectSubset<T, AnalyticsFindFirstOrThrowArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends GameSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, GameSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Analytics that matches the filter.
+     * Find zero or more GameSessions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {GameSessionFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Analytics
-     * const analytics = await prisma.analytics.findMany()
+     * // Get all GameSessions
+     * const gameSessions = await prisma.gameSession.findMany()
      * 
-     * // Get first 10 Analytics
-     * const analytics = await prisma.analytics.findMany({ take: 10 })
+     * // Get first 10 GameSessions
+     * const gameSessions = await prisma.gameSession.findMany({ take: 10 })
      * 
-     * // Only select the `analyticsId`
-     * const analyticsWithAnalyticsIdOnly = await prisma.analytics.findMany({ select: { analyticsId: true } })
+     * // Only select the `id`
+     * const gameSessionWithIdOnly = await prisma.gameSession.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AnalyticsFindManyArgs>(args?: SelectSubset<T, AnalyticsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends GameSessionFindManyArgs>(args?: SelectSubset<T, GameSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Analytics.
-     * @param {AnalyticsCreateArgs} args - Arguments to create a Analytics.
+     * Create a GameSession.
+     * @param {GameSessionCreateArgs} args - Arguments to create a GameSession.
      * @example
-     * // Create one Analytics
-     * const Analytics = await prisma.analytics.create({
+     * // Create one GameSession
+     * const GameSession = await prisma.gameSession.create({
      *   data: {
-     *     // ... data to create a Analytics
+     *     // ... data to create a GameSession
      *   }
      * })
      * 
      */
-    create<T extends AnalyticsCreateArgs>(args: SelectSubset<T, AnalyticsCreateArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends GameSessionCreateArgs>(args: SelectSubset<T, GameSessionCreateArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Analytics.
-     * @param {AnalyticsCreateManyArgs} args - Arguments to create many Analytics.
+     * Create many GameSessions.
+     * @param {GameSessionCreateManyArgs} args - Arguments to create many GameSessions.
      * @example
-     * // Create many Analytics
-     * const analytics = await prisma.analytics.createMany({
+     * // Create many GameSessions
+     * const gameSession = await prisma.gameSession.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AnalyticsCreateManyArgs>(args?: SelectSubset<T, AnalyticsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends GameSessionCreateManyArgs>(args?: SelectSubset<T, GameSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Analytics and returns the data saved in the database.
-     * @param {AnalyticsCreateManyAndReturnArgs} args - Arguments to create many Analytics.
+     * Create many GameSessions and returns the data saved in the database.
+     * @param {GameSessionCreateManyAndReturnArgs} args - Arguments to create many GameSessions.
      * @example
-     * // Create many Analytics
-     * const analytics = await prisma.analytics.createManyAndReturn({
+     * // Create many GameSessions
+     * const gameSession = await prisma.gameSession.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Analytics and only return the `analyticsId`
-     * const analyticsWithAnalyticsIdOnly = await prisma.analytics.createManyAndReturn({
-     *   select: { analyticsId: true },
+     * // Create many GameSessions and only return the `id`
+     * const gameSessionWithIdOnly = await prisma.gameSession.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -1355,28 +1218,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AnalyticsCreateManyAndReturnArgs>(args?: SelectSubset<T, AnalyticsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends GameSessionCreateManyAndReturnArgs>(args?: SelectSubset<T, GameSessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Analytics.
-     * @param {AnalyticsDeleteArgs} args - Arguments to delete one Analytics.
+     * Delete a GameSession.
+     * @param {GameSessionDeleteArgs} args - Arguments to delete one GameSession.
      * @example
-     * // Delete one Analytics
-     * const Analytics = await prisma.analytics.delete({
+     * // Delete one GameSession
+     * const GameSession = await prisma.gameSession.delete({
      *   where: {
-     *     // ... filter to delete one Analytics
+     *     // ... filter to delete one GameSession
      *   }
      * })
      * 
      */
-    delete<T extends AnalyticsDeleteArgs>(args: SelectSubset<T, AnalyticsDeleteArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends GameSessionDeleteArgs>(args: SelectSubset<T, GameSessionDeleteArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Analytics.
-     * @param {AnalyticsUpdateArgs} args - Arguments to update one Analytics.
+     * Update one GameSession.
+     * @param {GameSessionUpdateArgs} args - Arguments to update one GameSession.
      * @example
-     * // Update one Analytics
-     * const analytics = await prisma.analytics.update({
+     * // Update one GameSession
+     * const gameSession = await prisma.gameSession.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1386,30 +1249,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AnalyticsUpdateArgs>(args: SelectSubset<T, AnalyticsUpdateArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends GameSessionUpdateArgs>(args: SelectSubset<T, GameSessionUpdateArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Analytics.
-     * @param {AnalyticsDeleteManyArgs} args - Arguments to filter Analytics to delete.
+     * Delete zero or more GameSessions.
+     * @param {GameSessionDeleteManyArgs} args - Arguments to filter GameSessions to delete.
      * @example
-     * // Delete a few Analytics
-     * const { count } = await prisma.analytics.deleteMany({
+     * // Delete a few GameSessions
+     * const { count } = await prisma.gameSession.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AnalyticsDeleteManyArgs>(args?: SelectSubset<T, AnalyticsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends GameSessionDeleteManyArgs>(args?: SelectSubset<T, GameSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Analytics.
+     * Update zero or more GameSessions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {GameSessionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Analytics
-     * const analytics = await prisma.analytics.updateMany({
+     * // Update many GameSessions
+     * const gameSession = await prisma.gameSession.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1419,14 +1282,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AnalyticsUpdateManyArgs>(args: SelectSubset<T, AnalyticsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends GameSessionUpdateManyArgs>(args: SelectSubset<T, GameSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Analytics and returns the data updated in the database.
-     * @param {AnalyticsUpdateManyAndReturnArgs} args - Arguments to update many Analytics.
+     * Update zero or more GameSessions and returns the data updated in the database.
+     * @param {GameSessionUpdateManyAndReturnArgs} args - Arguments to update many GameSessions.
      * @example
-     * // Update many Analytics
-     * const analytics = await prisma.analytics.updateManyAndReturn({
+     * // Update many GameSessions
+     * const gameSession = await prisma.gameSession.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1435,9 +1298,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Analytics and only return the `analyticsId`
-     * const analyticsWithAnalyticsIdOnly = await prisma.analytics.updateManyAndReturn({
-     *   select: { analyticsId: true },
+     * // Update zero or more GameSessions and only return the `id`
+     * const gameSessionWithIdOnly = await prisma.gameSession.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1449,56 +1312,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AnalyticsUpdateManyAndReturnArgs>(args: SelectSubset<T, AnalyticsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends GameSessionUpdateManyAndReturnArgs>(args: SelectSubset<T, GameSessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Analytics.
-     * @param {AnalyticsUpsertArgs} args - Arguments to update or create a Analytics.
+     * Create or update one GameSession.
+     * @param {GameSessionUpsertArgs} args - Arguments to update or create a GameSession.
      * @example
-     * // Update or create a Analytics
-     * const analytics = await prisma.analytics.upsert({
+     * // Update or create a GameSession
+     * const gameSession = await prisma.gameSession.upsert({
      *   create: {
-     *     // ... data to create a Analytics
+     *     // ... data to create a GameSession
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Analytics we want to update
+     *     // ... the filter for the GameSession we want to update
      *   }
      * })
      */
-    upsert<T extends AnalyticsUpsertArgs>(args: SelectSubset<T, AnalyticsUpsertArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends GameSessionUpsertArgs>(args: SelectSubset<T, GameSessionUpsertArgs<ExtArgs>>): Prisma__GameSessionClient<$Result.GetResult<Prisma.$GameSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Analytics.
+     * Count the number of GameSessions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsCountArgs} args - Arguments to filter Analytics to count.
+     * @param {GameSessionCountArgs} args - Arguments to filter GameSessions to count.
      * @example
-     * // Count the number of Analytics
-     * const count = await prisma.analytics.count({
+     * // Count the number of GameSessions
+     * const count = await prisma.gameSession.count({
      *   where: {
-     *     // ... the filter for the Analytics we want to count
+     *     // ... the filter for the GameSessions we want to count
      *   }
      * })
     **/
-    count<T extends AnalyticsCountArgs>(
-      args?: Subset<T, AnalyticsCountArgs>,
+    count<T extends GameSessionCountArgs>(
+      args?: Subset<T, GameSessionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AnalyticsCountAggregateOutputType>
+          : GetScalarType<T['select'], GameSessionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Analytics.
+     * Allows you to perform aggregations operations on a GameSession.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {GameSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1518,13 +1381,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AnalyticsAggregateArgs>(args: Subset<T, AnalyticsAggregateArgs>): Prisma.PrismaPromise<GetAnalyticsAggregateType<T>>
+    aggregate<T extends GameSessionAggregateArgs>(args: Subset<T, GameSessionAggregateArgs>): Prisma.PrismaPromise<GetGameSessionAggregateType<T>>
 
     /**
-     * Group by Analytics.
+     * Group by GameSession.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AnalyticsGroupByArgs} args - Group by arguments.
+     * @param {GameSessionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1539,14 +1402,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AnalyticsGroupByArgs,
+      T extends GameSessionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AnalyticsGroupByArgs['orderBy'] }
-        : { orderBy?: AnalyticsGroupByArgs['orderBy'] },
+        ? { orderBy: GameSessionGroupByArgs['orderBy'] }
+        : { orderBy?: GameSessionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1595,22 +1458,21 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AnalyticsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAnalyticsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, GameSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGameSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Analytics model
+   * Fields of the GameSession model
    */
-  readonly fields: AnalyticsFieldRefs;
+  readonly fields: GameSessionFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Analytics.
+   * The delegate class that acts as a "Promise-like" for GameSession.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AnalyticsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__GameSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    metrics<T extends Analytics$metricsArgs<ExtArgs> = {}>(args?: Subset<T, Analytics$metricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1637,1522 +1499,383 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Analytics model
+   * Fields of the GameSession model
    */
-  interface AnalyticsFieldRefs {
-    readonly analyticsId: FieldRef<"Analytics", 'String'>
-    readonly createdAt: FieldRef<"Analytics", 'DateTime'>
-    readonly updatedAt: FieldRef<"Analytics", 'DateTime'>
-    readonly cityIp: FieldRef<"Analytics", 'String'>
-    readonly country: FieldRef<"Analytics", 'String'>
-    readonly state: FieldRef<"Analytics", 'String'>
-    readonly region: FieldRef<"Analytics", 'String'>
+  interface GameSessionFieldRefs {
+    readonly id: FieldRef<"GameSession", 'String'>
+    readonly playedAt: FieldRef<"GameSession", 'DateTime'>
+    readonly result: FieldRef<"GameSession", 'String'>
+    readonly city: FieldRef<"GameSession", 'String'>
+    readonly state: FieldRef<"GameSession", 'String'>
+    readonly country: FieldRef<"GameSession", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Analytics findUnique
+   * GameSession findUnique
    */
-  export type AnalyticsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Analytics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: AnalyticsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Analytics
+     * Omit specific fields from the GameSession
      */
-    omit?: AnalyticsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which GameSession to fetch.
      */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter, which Analytics to fetch.
-     */
-    where: AnalyticsWhereUniqueInput
+    where: GameSessionWhereUniqueInput
   }
 
   /**
-   * Analytics findUniqueOrThrow
+   * GameSession findUniqueOrThrow
    */
-  export type AnalyticsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Analytics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: AnalyticsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Analytics
+     * Omit specific fields from the GameSession
      */
-    omit?: AnalyticsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which GameSession to fetch.
      */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter, which Analytics to fetch.
-     */
-    where: AnalyticsWhereUniqueInput
+    where: GameSessionWhereUniqueInput
   }
 
   /**
-   * Analytics findFirst
+   * GameSession findFirst
    */
-  export type AnalyticsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Analytics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: AnalyticsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Analytics
+     * Omit specific fields from the GameSession
      */
-    omit?: AnalyticsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which GameSession to fetch.
      */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter, which Analytics to fetch.
-     */
-    where?: AnalyticsWhereInput
+    where?: GameSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Analytics to fetch.
+     * Determine the order of GameSessions to fetch.
      */
-    orderBy?: AnalyticsOrderByWithRelationInput | AnalyticsOrderByWithRelationInput[]
+    orderBy?: GameSessionOrderByWithRelationInput | GameSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Analytics.
+     * Sets the position for searching for GameSessions.
      */
-    cursor?: AnalyticsWhereUniqueInput
+    cursor?: GameSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Analytics from the position of the cursor.
+     * Take `±n` GameSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Analytics.
+     * Skip the first `n` GameSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Analytics.
+     * Filter by unique combinations of GameSessions.
      */
-    distinct?: AnalyticsScalarFieldEnum | AnalyticsScalarFieldEnum[]
+    distinct?: GameSessionScalarFieldEnum | GameSessionScalarFieldEnum[]
   }
 
   /**
-   * Analytics findFirstOrThrow
+   * GameSession findFirstOrThrow
    */
-  export type AnalyticsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Analytics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: AnalyticsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Analytics
+     * Omit specific fields from the GameSession
      */
-    omit?: AnalyticsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which GameSession to fetch.
      */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter, which Analytics to fetch.
-     */
-    where?: AnalyticsWhereInput
+    where?: GameSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Analytics to fetch.
+     * Determine the order of GameSessions to fetch.
      */
-    orderBy?: AnalyticsOrderByWithRelationInput | AnalyticsOrderByWithRelationInput[]
+    orderBy?: GameSessionOrderByWithRelationInput | GameSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Analytics.
+     * Sets the position for searching for GameSessions.
      */
-    cursor?: AnalyticsWhereUniqueInput
+    cursor?: GameSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Analytics from the position of the cursor.
+     * Take `±n` GameSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Analytics.
+     * Skip the first `n` GameSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Analytics.
+     * Filter by unique combinations of GameSessions.
      */
-    distinct?: AnalyticsScalarFieldEnum | AnalyticsScalarFieldEnum[]
+    distinct?: GameSessionScalarFieldEnum | GameSessionScalarFieldEnum[]
   }
 
   /**
-   * Analytics findMany
+   * GameSession findMany
    */
-  export type AnalyticsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Analytics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: AnalyticsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Analytics
+     * Omit specific fields from the GameSession
      */
-    omit?: AnalyticsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which GameSessions to fetch.
      */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter, which Analytics to fetch.
-     */
-    where?: AnalyticsWhereInput
+    where?: GameSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Analytics to fetch.
+     * Determine the order of GameSessions to fetch.
      */
-    orderBy?: AnalyticsOrderByWithRelationInput | AnalyticsOrderByWithRelationInput[]
+    orderBy?: GameSessionOrderByWithRelationInput | GameSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Analytics.
+     * Sets the position for listing GameSessions.
      */
-    cursor?: AnalyticsWhereUniqueInput
+    cursor?: GameSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Analytics from the position of the cursor.
+     * Take `±n` GameSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Analytics.
-     */
-    skip?: number
-    distinct?: AnalyticsScalarFieldEnum | AnalyticsScalarFieldEnum[]
-  }
-
-  /**
-   * Analytics create
-   */
-  export type AnalyticsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Analytics.
-     */
-    data: XOR<AnalyticsCreateInput, AnalyticsUncheckedCreateInput>
-  }
-
-  /**
-   * Analytics createMany
-   */
-  export type AnalyticsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Analytics.
-     */
-    data: AnalyticsCreateManyInput | AnalyticsCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Analytics createManyAndReturn
-   */
-  export type AnalyticsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * The data used to create many Analytics.
-     */
-    data: AnalyticsCreateManyInput | AnalyticsCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Analytics update
-   */
-  export type AnalyticsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Analytics.
-     */
-    data: XOR<AnalyticsUpdateInput, AnalyticsUncheckedUpdateInput>
-    /**
-     * Choose, which Analytics to update.
-     */
-    where: AnalyticsWhereUniqueInput
-  }
-
-  /**
-   * Analytics updateMany
-   */
-  export type AnalyticsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Analytics.
-     */
-    data: XOR<AnalyticsUpdateManyMutationInput, AnalyticsUncheckedUpdateManyInput>
-    /**
-     * Filter which Analytics to update
-     */
-    where?: AnalyticsWhereInput
-    /**
-     * Limit how many Analytics to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Analytics updateManyAndReturn
-   */
-  export type AnalyticsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * The data used to update Analytics.
-     */
-    data: XOR<AnalyticsUpdateManyMutationInput, AnalyticsUncheckedUpdateManyInput>
-    /**
-     * Filter which Analytics to update
-     */
-    where?: AnalyticsWhereInput
-    /**
-     * Limit how many Analytics to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Analytics upsert
-   */
-  export type AnalyticsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Analytics to update in case it exists.
-     */
-    where: AnalyticsWhereUniqueInput
-    /**
-     * In case the Analytics found by the `where` argument doesn't exist, create a new Analytics with this data.
-     */
-    create: XOR<AnalyticsCreateInput, AnalyticsUncheckedCreateInput>
-    /**
-     * In case the Analytics was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AnalyticsUpdateInput, AnalyticsUncheckedUpdateInput>
-  }
-
-  /**
-   * Analytics delete
-   */
-  export type AnalyticsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AnalyticsInclude<ExtArgs> | null
-    /**
-     * Filter which Analytics to delete.
-     */
-    where: AnalyticsWhereUniqueInput
-  }
-
-  /**
-   * Analytics deleteMany
-   */
-  export type AnalyticsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Analytics to delete
-     */
-    where?: AnalyticsWhereInput
-    /**
-     * Limit how many Analytics to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Analytics.metrics
-   */
-  export type Analytics$metricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    where?: MetricsWhereInput
-    orderBy?: MetricsOrderByWithRelationInput | MetricsOrderByWithRelationInput[]
-    cursor?: MetricsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MetricsScalarFieldEnum | MetricsScalarFieldEnum[]
-  }
-
-  /**
-   * Analytics without action
-   */
-  export type AnalyticsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Analytics
-     */
-    select?: AnalyticsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Analytics
-     */
-    omit?: AnalyticsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AnalyticsInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Metrics
-   */
-
-  export type AggregateMetrics = {
-    _count: MetricsCountAggregateOutputType | null
-    _avg: MetricsAvgAggregateOutputType | null
-    _sum: MetricsSumAggregateOutputType | null
-    _min: MetricsMinAggregateOutputType | null
-    _max: MetricsMaxAggregateOutputType | null
-  }
-
-  export type MetricsAvgAggregateOutputType = {
-    total_games: number | null
-  }
-
-  export type MetricsSumAggregateOutputType = {
-    total_games: number | null
-  }
-
-  export type MetricsMinAggregateOutputType = {
-    metricsId: string | null
-    createdAt: Date | null
-    total_games: number | null
-    analyticsId: string | null
-  }
-
-  export type MetricsMaxAggregateOutputType = {
-    metricsId: string | null
-    createdAt: Date | null
-    total_games: number | null
-    analyticsId: string | null
-  }
-
-  export type MetricsCountAggregateOutputType = {
-    metricsId: number
-    createdAt: number
-    total_games: number
-    analyticsId: number
-    _all: number
-  }
-
-
-  export type MetricsAvgAggregateInputType = {
-    total_games?: true
-  }
-
-  export type MetricsSumAggregateInputType = {
-    total_games?: true
-  }
-
-  export type MetricsMinAggregateInputType = {
-    metricsId?: true
-    createdAt?: true
-    total_games?: true
-    analyticsId?: true
-  }
-
-  export type MetricsMaxAggregateInputType = {
-    metricsId?: true
-    createdAt?: true
-    total_games?: true
-    analyticsId?: true
-  }
-
-  export type MetricsCountAggregateInputType = {
-    metricsId?: true
-    createdAt?: true
-    total_games?: true
-    analyticsId?: true
-    _all?: true
-  }
-
-  export type MetricsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Metrics to aggregate.
-     */
-    where?: MetricsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Metrics to fetch.
-     */
-    orderBy?: MetricsOrderByWithRelationInput | MetricsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: MetricsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Metrics from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Metrics.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Metrics
-    **/
-    _count?: true | MetricsCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: MetricsAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MetricsSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MetricsMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MetricsMaxAggregateInputType
-  }
-
-  export type GetMetricsAggregateType<T extends MetricsAggregateArgs> = {
-        [P in keyof T & keyof AggregateMetrics]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMetrics[P]>
-      : GetScalarType<T[P], AggregateMetrics[P]>
-  }
-
-
-
-
-  export type MetricsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MetricsWhereInput
-    orderBy?: MetricsOrderByWithAggregationInput | MetricsOrderByWithAggregationInput[]
-    by: MetricsScalarFieldEnum[] | MetricsScalarFieldEnum
-    having?: MetricsScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MetricsCountAggregateInputType | true
-    _avg?: MetricsAvgAggregateInputType
-    _sum?: MetricsSumAggregateInputType
-    _min?: MetricsMinAggregateInputType
-    _max?: MetricsMaxAggregateInputType
-  }
-
-  export type MetricsGroupByOutputType = {
-    metricsId: string
-    createdAt: Date
-    total_games: number
-    analyticsId: string
-    _count: MetricsCountAggregateOutputType | null
-    _avg: MetricsAvgAggregateOutputType | null
-    _sum: MetricsSumAggregateOutputType | null
-    _min: MetricsMinAggregateOutputType | null
-    _max: MetricsMaxAggregateOutputType | null
-  }
-
-  type GetMetricsGroupByPayload<T extends MetricsGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<MetricsGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MetricsGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MetricsGroupByOutputType[P]>
-            : GetScalarType<T[P], MetricsGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type MetricsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    metricsId?: boolean
-    createdAt?: boolean
-    total_games?: boolean
-    analyticsId?: boolean
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["metrics"]>
-
-  export type MetricsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    metricsId?: boolean
-    createdAt?: boolean
-    total_games?: boolean
-    analyticsId?: boolean
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["metrics"]>
-
-  export type MetricsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    metricsId?: boolean
-    createdAt?: boolean
-    total_games?: boolean
-    analyticsId?: boolean
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["metrics"]>
-
-  export type MetricsSelectScalar = {
-    metricsId?: boolean
-    createdAt?: boolean
-    total_games?: boolean
-    analyticsId?: boolean
-  }
-
-  export type MetricsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"metricsId" | "createdAt" | "total_games" | "analyticsId", ExtArgs["result"]["metrics"]>
-  export type MetricsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }
-  export type MetricsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }
-  export type MetricsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    analytics?: boolean | AnalyticsDefaultArgs<ExtArgs>
-  }
-
-  export type $MetricsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Metrics"
-    objects: {
-      analytics: Prisma.$AnalyticsPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      metricsId: string
-      createdAt: Date
-      total_games: number
-      analyticsId: string
-    }, ExtArgs["result"]["metrics"]>
-    composites: {}
-  }
-
-  type MetricsGetPayload<S extends boolean | null | undefined | MetricsDefaultArgs> = $Result.GetResult<Prisma.$MetricsPayload, S>
-
-  type MetricsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MetricsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MetricsCountAggregateInputType | true
-    }
-
-  export interface MetricsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Metrics'], meta: { name: 'Metrics' } }
-    /**
-     * Find zero or one Metrics that matches the filter.
-     * @param {MetricsFindUniqueArgs} args - Arguments to find a Metrics
-     * @example
-     * // Get one Metrics
-     * const metrics = await prisma.metrics.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends MetricsFindUniqueArgs>(args: SelectSubset<T, MetricsFindUniqueArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Metrics that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {MetricsFindUniqueOrThrowArgs} args - Arguments to find a Metrics
-     * @example
-     * // Get one Metrics
-     * const metrics = await prisma.metrics.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends MetricsFindUniqueOrThrowArgs>(args: SelectSubset<T, MetricsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Metrics that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsFindFirstArgs} args - Arguments to find a Metrics
-     * @example
-     * // Get one Metrics
-     * const metrics = await prisma.metrics.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends MetricsFindFirstArgs>(args?: SelectSubset<T, MetricsFindFirstArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Metrics that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsFindFirstOrThrowArgs} args - Arguments to find a Metrics
-     * @example
-     * // Get one Metrics
-     * const metrics = await prisma.metrics.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends MetricsFindFirstOrThrowArgs>(args?: SelectSubset<T, MetricsFindFirstOrThrowArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Metrics that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Metrics
-     * const metrics = await prisma.metrics.findMany()
-     * 
-     * // Get first 10 Metrics
-     * const metrics = await prisma.metrics.findMany({ take: 10 })
-     * 
-     * // Only select the `metricsId`
-     * const metricsWithMetricsIdOnly = await prisma.metrics.findMany({ select: { metricsId: true } })
-     * 
-     */
-    findMany<T extends MetricsFindManyArgs>(args?: SelectSubset<T, MetricsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Metrics.
-     * @param {MetricsCreateArgs} args - Arguments to create a Metrics.
-     * @example
-     * // Create one Metrics
-     * const Metrics = await prisma.metrics.create({
-     *   data: {
-     *     // ... data to create a Metrics
-     *   }
-     * })
-     * 
-     */
-    create<T extends MetricsCreateArgs>(args: SelectSubset<T, MetricsCreateArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Metrics.
-     * @param {MetricsCreateManyArgs} args - Arguments to create many Metrics.
-     * @example
-     * // Create many Metrics
-     * const metrics = await prisma.metrics.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends MetricsCreateManyArgs>(args?: SelectSubset<T, MetricsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Metrics and returns the data saved in the database.
-     * @param {MetricsCreateManyAndReturnArgs} args - Arguments to create many Metrics.
-     * @example
-     * // Create many Metrics
-     * const metrics = await prisma.metrics.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Metrics and only return the `metricsId`
-     * const metricsWithMetricsIdOnly = await prisma.metrics.createManyAndReturn({
-     *   select: { metricsId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends MetricsCreateManyAndReturnArgs>(args?: SelectSubset<T, MetricsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Metrics.
-     * @param {MetricsDeleteArgs} args - Arguments to delete one Metrics.
-     * @example
-     * // Delete one Metrics
-     * const Metrics = await prisma.metrics.delete({
-     *   where: {
-     *     // ... filter to delete one Metrics
-     *   }
-     * })
-     * 
-     */
-    delete<T extends MetricsDeleteArgs>(args: SelectSubset<T, MetricsDeleteArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Metrics.
-     * @param {MetricsUpdateArgs} args - Arguments to update one Metrics.
-     * @example
-     * // Update one Metrics
-     * const metrics = await prisma.metrics.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends MetricsUpdateArgs>(args: SelectSubset<T, MetricsUpdateArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Metrics.
-     * @param {MetricsDeleteManyArgs} args - Arguments to filter Metrics to delete.
-     * @example
-     * // Delete a few Metrics
-     * const { count } = await prisma.metrics.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends MetricsDeleteManyArgs>(args?: SelectSubset<T, MetricsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Metrics.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Metrics
-     * const metrics = await prisma.metrics.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends MetricsUpdateManyArgs>(args: SelectSubset<T, MetricsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Metrics and returns the data updated in the database.
-     * @param {MetricsUpdateManyAndReturnArgs} args - Arguments to update many Metrics.
-     * @example
-     * // Update many Metrics
-     * const metrics = await prisma.metrics.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Metrics and only return the `metricsId`
-     * const metricsWithMetricsIdOnly = await prisma.metrics.updateManyAndReturn({
-     *   select: { metricsId: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends MetricsUpdateManyAndReturnArgs>(args: SelectSubset<T, MetricsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Metrics.
-     * @param {MetricsUpsertArgs} args - Arguments to update or create a Metrics.
-     * @example
-     * // Update or create a Metrics
-     * const metrics = await prisma.metrics.upsert({
-     *   create: {
-     *     // ... data to create a Metrics
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Metrics we want to update
-     *   }
-     * })
-     */
-    upsert<T extends MetricsUpsertArgs>(args: SelectSubset<T, MetricsUpsertArgs<ExtArgs>>): Prisma__MetricsClient<$Result.GetResult<Prisma.$MetricsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Metrics.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsCountArgs} args - Arguments to filter Metrics to count.
-     * @example
-     * // Count the number of Metrics
-     * const count = await prisma.metrics.count({
-     *   where: {
-     *     // ... the filter for the Metrics we want to count
-     *   }
-     * })
-    **/
-    count<T extends MetricsCountArgs>(
-      args?: Subset<T, MetricsCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MetricsCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Metrics.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MetricsAggregateArgs>(args: Subset<T, MetricsAggregateArgs>): Prisma.PrismaPromise<GetMetricsAggregateType<T>>
-
-    /**
-     * Group by Metrics.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MetricsGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends MetricsGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MetricsGroupByArgs['orderBy'] }
-        : { orderBy?: MetricsGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, MetricsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMetricsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Metrics model
-   */
-  readonly fields: MetricsFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Metrics.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__MetricsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    analytics<T extends AnalyticsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnalyticsDefaultArgs<ExtArgs>>): Prisma__AnalyticsClient<$Result.GetResult<Prisma.$AnalyticsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Metrics model
-   */
-  interface MetricsFieldRefs {
-    readonly metricsId: FieldRef<"Metrics", 'String'>
-    readonly createdAt: FieldRef<"Metrics", 'DateTime'>
-    readonly total_games: FieldRef<"Metrics", 'Int'>
-    readonly analyticsId: FieldRef<"Metrics", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Metrics findUnique
-   */
-  export type MetricsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter, which Metrics to fetch.
-     */
-    where: MetricsWhereUniqueInput
-  }
-
-  /**
-   * Metrics findUniqueOrThrow
-   */
-  export type MetricsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter, which Metrics to fetch.
-     */
-    where: MetricsWhereUniqueInput
-  }
-
-  /**
-   * Metrics findFirst
-   */
-  export type MetricsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter, which Metrics to fetch.
-     */
-    where?: MetricsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Metrics to fetch.
-     */
-    orderBy?: MetricsOrderByWithRelationInput | MetricsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Metrics.
-     */
-    cursor?: MetricsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Metrics from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Metrics.
+     * Skip the first `n` GameSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Metrics.
+     * Filter by unique combinations of GameSessions.
      */
-    distinct?: MetricsScalarFieldEnum | MetricsScalarFieldEnum[]
+    distinct?: GameSessionScalarFieldEnum | GameSessionScalarFieldEnum[]
   }
 
   /**
-   * Metrics findFirstOrThrow
+   * GameSession create
    */
-  export type MetricsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: MetricsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Metrics
+     * Omit specific fields from the GameSession
      */
-    omit?: MetricsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to create a GameSession.
      */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter, which Metrics to fetch.
-     */
-    where?: MetricsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Metrics to fetch.
-     */
-    orderBy?: MetricsOrderByWithRelationInput | MetricsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Metrics.
-     */
-    cursor?: MetricsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Metrics from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Metrics.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Metrics.
-     */
-    distinct?: MetricsScalarFieldEnum | MetricsScalarFieldEnum[]
+    data: XOR<GameSessionCreateInput, GameSessionUncheckedCreateInput>
   }
 
   /**
-   * Metrics findMany
+   * GameSession createMany
    */
-  export type MetricsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * The data used to create many GameSessions.
      */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter, which Metrics to fetch.
-     */
-    where?: MetricsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Metrics to fetch.
-     */
-    orderBy?: MetricsOrderByWithRelationInput | MetricsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Metrics.
-     */
-    cursor?: MetricsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Metrics from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Metrics.
-     */
-    skip?: number
-    distinct?: MetricsScalarFieldEnum | MetricsScalarFieldEnum[]
-  }
-
-  /**
-   * Metrics create
-   */
-  export type MetricsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Metrics.
-     */
-    data: XOR<MetricsCreateInput, MetricsUncheckedCreateInput>
-  }
-
-  /**
-   * Metrics createMany
-   */
-  export type MetricsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Metrics.
-     */
-    data: MetricsCreateManyInput | MetricsCreateManyInput[]
+    data: GameSessionCreateManyInput | GameSessionCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Metrics createManyAndReturn
+   * GameSession createManyAndReturn
    */
-  export type MetricsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: MetricsSelectCreateManyAndReturn<ExtArgs> | null
+    select?: GameSessionSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Metrics
+     * Omit specific fields from the GameSession
      */
-    omit?: MetricsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * The data used to create many Metrics.
+     * The data used to create many GameSessions.
      */
-    data: MetricsCreateManyInput | MetricsCreateManyInput[]
+    data: GameSessionCreateManyInput | GameSessionCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Metrics update
+   * GameSession update
    */
-  export type MetricsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: MetricsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Metrics
+     * Omit specific fields from the GameSession
      */
-    omit?: MetricsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to update a GameSession.
      */
-    include?: MetricsInclude<ExtArgs> | null
+    data: XOR<GameSessionUpdateInput, GameSessionUncheckedUpdateInput>
     /**
-     * The data needed to update a Metrics.
+     * Choose, which GameSession to update.
      */
-    data: XOR<MetricsUpdateInput, MetricsUncheckedUpdateInput>
-    /**
-     * Choose, which Metrics to update.
-     */
-    where: MetricsWhereUniqueInput
+    where: GameSessionWhereUniqueInput
   }
 
   /**
-   * Metrics updateMany
+   * GameSession updateMany
    */
-  export type MetricsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Metrics.
+     * The data used to update GameSessions.
      */
-    data: XOR<MetricsUpdateManyMutationInput, MetricsUncheckedUpdateManyInput>
+    data: XOR<GameSessionUpdateManyMutationInput, GameSessionUncheckedUpdateManyInput>
     /**
-     * Filter which Metrics to update
+     * Filter which GameSessions to update
      */
-    where?: MetricsWhereInput
+    where?: GameSessionWhereInput
     /**
-     * Limit how many Metrics to update.
+     * Limit how many GameSessions to update.
      */
     limit?: number
   }
 
   /**
-   * Metrics updateManyAndReturn
+   * GameSession updateManyAndReturn
    */
-  export type MetricsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: MetricsSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: GameSessionSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Metrics
+     * Omit specific fields from the GameSession
      */
-    omit?: MetricsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * The data used to update Metrics.
+     * The data used to update GameSessions.
      */
-    data: XOR<MetricsUpdateManyMutationInput, MetricsUncheckedUpdateManyInput>
+    data: XOR<GameSessionUpdateManyMutationInput, GameSessionUncheckedUpdateManyInput>
     /**
-     * Filter which Metrics to update
+     * Filter which GameSessions to update
      */
-    where?: MetricsWhereInput
+    where?: GameSessionWhereInput
     /**
-     * Limit how many Metrics to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Metrics upsert
-   */
-  export type MetricsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Metrics to update in case it exists.
-     */
-    where: MetricsWhereUniqueInput
-    /**
-     * In case the Metrics found by the `where` argument doesn't exist, create a new Metrics with this data.
-     */
-    create: XOR<MetricsCreateInput, MetricsUncheckedCreateInput>
-    /**
-     * In case the Metrics was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<MetricsUpdateInput, MetricsUncheckedUpdateInput>
-  }
-
-  /**
-   * Metrics delete
-   */
-  export type MetricsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Metrics
-     */
-    select?: MetricsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Metrics
-     */
-    omit?: MetricsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MetricsInclude<ExtArgs> | null
-    /**
-     * Filter which Metrics to delete.
-     */
-    where: MetricsWhereUniqueInput
-  }
-
-  /**
-   * Metrics deleteMany
-   */
-  export type MetricsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Metrics to delete
-     */
-    where?: MetricsWhereInput
-    /**
-     * Limit how many Metrics to delete.
+     * Limit how many GameSessions to update.
      */
     limit?: number
   }
 
   /**
-   * Metrics without action
+   * GameSession upsert
    */
-  export type MetricsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GameSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Metrics
+     * Select specific fields to fetch from the GameSession
      */
-    select?: MetricsSelect<ExtArgs> | null
+    select?: GameSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Metrics
+     * Omit specific fields from the GameSession
      */
-    omit?: MetricsOmit<ExtArgs> | null
+    omit?: GameSessionOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The filter to search for the GameSession to update in case it exists.
      */
-    include?: MetricsInclude<ExtArgs> | null
+    where: GameSessionWhereUniqueInput
+    /**
+     * In case the GameSession found by the `where` argument doesn't exist, create a new GameSession with this data.
+     */
+    create: XOR<GameSessionCreateInput, GameSessionUncheckedCreateInput>
+    /**
+     * In case the GameSession was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GameSessionUpdateInput, GameSessionUncheckedUpdateInput>
+  }
+
+  /**
+   * GameSession delete
+   */
+  export type GameSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameSession
+     */
+    select?: GameSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameSession
+     */
+    omit?: GameSessionOmit<ExtArgs> | null
+    /**
+     * Filter which GameSession to delete.
+     */
+    where: GameSessionWhereUniqueInput
+  }
+
+  /**
+   * GameSession deleteMany
+   */
+  export type GameSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameSessions to delete
+     */
+    where?: GameSessionWhereInput
+    /**
+     * Limit how many GameSessions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameSession without action
+   */
+  export type GameSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameSession
+     */
+    select?: GameSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameSession
+     */
+    omit?: GameSessionOmit<ExtArgs> | null
   }
 
 
@@ -3170,27 +1893,16 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const AnalyticsScalarFieldEnum: {
-    analyticsId: 'analyticsId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    cityIp: 'cityIp',
-    country: 'country',
+  export const GameSessionScalarFieldEnum: {
+    id: 'id',
+    playedAt: 'playedAt',
+    result: 'result',
+    city: 'city',
     state: 'state',
-    region: 'region'
+    country: 'country'
   };
 
-  export type AnalyticsScalarFieldEnum = (typeof AnalyticsScalarFieldEnum)[keyof typeof AnalyticsScalarFieldEnum]
-
-
-  export const MetricsScalarFieldEnum: {
-    metricsId: 'metricsId',
-    createdAt: 'createdAt',
-    total_games: 'total_games',
-    analyticsId: 'analyticsId'
-  };
-
-  export type MetricsScalarFieldEnum = (typeof MetricsScalarFieldEnum)[keyof typeof MetricsScalarFieldEnum]
+  export type GameSessionScalarFieldEnum = (typeof GameSessionScalarFieldEnum)[keyof typeof GameSessionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3254,262 +1966,129 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
   /**
    * Deep Input Types
    */
 
 
-  export type AnalyticsWhereInput = {
-    AND?: AnalyticsWhereInput | AnalyticsWhereInput[]
-    OR?: AnalyticsWhereInput[]
-    NOT?: AnalyticsWhereInput | AnalyticsWhereInput[]
-    analyticsId?: StringFilter<"Analytics"> | string
-    createdAt?: DateTimeFilter<"Analytics"> | Date | string
-    updatedAt?: DateTimeFilter<"Analytics"> | Date | string
-    cityIp?: StringFilter<"Analytics"> | string
-    country?: StringFilter<"Analytics"> | string
-    state?: StringFilter<"Analytics"> | string
-    region?: StringFilter<"Analytics"> | string
-    metrics?: MetricsListRelationFilter
+  export type GameSessionWhereInput = {
+    AND?: GameSessionWhereInput | GameSessionWhereInput[]
+    OR?: GameSessionWhereInput[]
+    NOT?: GameSessionWhereInput | GameSessionWhereInput[]
+    id?: StringFilter<"GameSession"> | string
+    playedAt?: DateTimeFilter<"GameSession"> | Date | string
+    result?: StringFilter<"GameSession"> | string
+    city?: StringFilter<"GameSession"> | string
+    state?: StringFilter<"GameSession"> | string
+    country?: StringFilter<"GameSession"> | string
   }
 
-  export type AnalyticsOrderByWithRelationInput = {
-    analyticsId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    cityIp?: SortOrder
-    country?: SortOrder
+  export type GameSessionOrderByWithRelationInput = {
+    id?: SortOrder
+    playedAt?: SortOrder
+    result?: SortOrder
+    city?: SortOrder
     state?: SortOrder
-    region?: SortOrder
-    metrics?: MetricsOrderByRelationAggregateInput
-  }
-
-  export type AnalyticsWhereUniqueInput = Prisma.AtLeast<{
-    analyticsId?: string
-    region?: string
-    AND?: AnalyticsWhereInput | AnalyticsWhereInput[]
-    OR?: AnalyticsWhereInput[]
-    NOT?: AnalyticsWhereInput | AnalyticsWhereInput[]
-    createdAt?: DateTimeFilter<"Analytics"> | Date | string
-    updatedAt?: DateTimeFilter<"Analytics"> | Date | string
-    cityIp?: StringFilter<"Analytics"> | string
-    country?: StringFilter<"Analytics"> | string
-    state?: StringFilter<"Analytics"> | string
-    metrics?: MetricsListRelationFilter
-  }, "analyticsId" | "region">
-
-  export type AnalyticsOrderByWithAggregationInput = {
-    analyticsId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    cityIp?: SortOrder
     country?: SortOrder
+  }
+
+  export type GameSessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GameSessionWhereInput | GameSessionWhereInput[]
+    OR?: GameSessionWhereInput[]
+    NOT?: GameSessionWhereInput | GameSessionWhereInput[]
+    playedAt?: DateTimeFilter<"GameSession"> | Date | string
+    result?: StringFilter<"GameSession"> | string
+    city?: StringFilter<"GameSession"> | string
+    state?: StringFilter<"GameSession"> | string
+    country?: StringFilter<"GameSession"> | string
+  }, "id">
+
+  export type GameSessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    playedAt?: SortOrder
+    result?: SortOrder
+    city?: SortOrder
     state?: SortOrder
-    region?: SortOrder
-    _count?: AnalyticsCountOrderByAggregateInput
-    _max?: AnalyticsMaxOrderByAggregateInput
-    _min?: AnalyticsMinOrderByAggregateInput
+    country?: SortOrder
+    _count?: GameSessionCountOrderByAggregateInput
+    _max?: GameSessionMaxOrderByAggregateInput
+    _min?: GameSessionMinOrderByAggregateInput
   }
 
-  export type AnalyticsScalarWhereWithAggregatesInput = {
-    AND?: AnalyticsScalarWhereWithAggregatesInput | AnalyticsScalarWhereWithAggregatesInput[]
-    OR?: AnalyticsScalarWhereWithAggregatesInput[]
-    NOT?: AnalyticsScalarWhereWithAggregatesInput | AnalyticsScalarWhereWithAggregatesInput[]
-    analyticsId?: StringWithAggregatesFilter<"Analytics"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Analytics"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Analytics"> | Date | string
-    cityIp?: StringWithAggregatesFilter<"Analytics"> | string
-    country?: StringWithAggregatesFilter<"Analytics"> | string
-    state?: StringWithAggregatesFilter<"Analytics"> | string
-    region?: StringWithAggregatesFilter<"Analytics"> | string
+  export type GameSessionScalarWhereWithAggregatesInput = {
+    AND?: GameSessionScalarWhereWithAggregatesInput | GameSessionScalarWhereWithAggregatesInput[]
+    OR?: GameSessionScalarWhereWithAggregatesInput[]
+    NOT?: GameSessionScalarWhereWithAggregatesInput | GameSessionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GameSession"> | string
+    playedAt?: DateTimeWithAggregatesFilter<"GameSession"> | Date | string
+    result?: StringWithAggregatesFilter<"GameSession"> | string
+    city?: StringWithAggregatesFilter<"GameSession"> | string
+    state?: StringWithAggregatesFilter<"GameSession"> | string
+    country?: StringWithAggregatesFilter<"GameSession"> | string
   }
 
-  export type MetricsWhereInput = {
-    AND?: MetricsWhereInput | MetricsWhereInput[]
-    OR?: MetricsWhereInput[]
-    NOT?: MetricsWhereInput | MetricsWhereInput[]
-    metricsId?: StringFilter<"Metrics"> | string
-    createdAt?: DateTimeFilter<"Metrics"> | Date | string
-    total_games?: IntFilter<"Metrics"> | number
-    analyticsId?: StringFilter<"Metrics"> | string
-    analytics?: XOR<AnalyticsScalarRelationFilter, AnalyticsWhereInput>
-  }
-
-  export type MetricsOrderByWithRelationInput = {
-    metricsId?: SortOrder
-    createdAt?: SortOrder
-    total_games?: SortOrder
-    analyticsId?: SortOrder
-    analytics?: AnalyticsOrderByWithRelationInput
-  }
-
-  export type MetricsWhereUniqueInput = Prisma.AtLeast<{
-    metricsId?: string
-    AND?: MetricsWhereInput | MetricsWhereInput[]
-    OR?: MetricsWhereInput[]
-    NOT?: MetricsWhereInput | MetricsWhereInput[]
-    createdAt?: DateTimeFilter<"Metrics"> | Date | string
-    total_games?: IntFilter<"Metrics"> | number
-    analyticsId?: StringFilter<"Metrics"> | string
-    analytics?: XOR<AnalyticsScalarRelationFilter, AnalyticsWhereInput>
-  }, "metricsId">
-
-  export type MetricsOrderByWithAggregationInput = {
-    metricsId?: SortOrder
-    createdAt?: SortOrder
-    total_games?: SortOrder
-    analyticsId?: SortOrder
-    _count?: MetricsCountOrderByAggregateInput
-    _avg?: MetricsAvgOrderByAggregateInput
-    _max?: MetricsMaxOrderByAggregateInput
-    _min?: MetricsMinOrderByAggregateInput
-    _sum?: MetricsSumOrderByAggregateInput
-  }
-
-  export type MetricsScalarWhereWithAggregatesInput = {
-    AND?: MetricsScalarWhereWithAggregatesInput | MetricsScalarWhereWithAggregatesInput[]
-    OR?: MetricsScalarWhereWithAggregatesInput[]
-    NOT?: MetricsScalarWhereWithAggregatesInput | MetricsScalarWhereWithAggregatesInput[]
-    metricsId?: StringWithAggregatesFilter<"Metrics"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Metrics"> | Date | string
-    total_games?: IntWithAggregatesFilter<"Metrics"> | number
-    analyticsId?: StringWithAggregatesFilter<"Metrics"> | string
-  }
-
-  export type AnalyticsCreateInput = {
-    analyticsId?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cityIp: string
-    country: string
+  export type GameSessionCreateInput = {
+    id?: string
+    playedAt?: Date | string
+    result: string
+    city: string
     state: string
-    region: string
-    metrics?: MetricsCreateNestedManyWithoutAnalyticsInput
-  }
-
-  export type AnalyticsUncheckedCreateInput = {
-    analyticsId?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cityIp: string
     country: string
+  }
+
+  export type GameSessionUncheckedCreateInput = {
+    id?: string
+    playedAt?: Date | string
+    result: string
+    city: string
     state: string
-    region: string
-    metrics?: MetricsUncheckedCreateNestedManyWithoutAnalyticsInput
-  }
-
-  export type AnalyticsUpdateInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-    metrics?: MetricsUpdateManyWithoutAnalyticsNestedInput
-  }
-
-  export type AnalyticsUncheckedUpdateInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-    metrics?: MetricsUncheckedUpdateManyWithoutAnalyticsNestedInput
-  }
-
-  export type AnalyticsCreateManyInput = {
-    analyticsId?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cityIp: string
     country: string
+  }
+
+  export type GameSessionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    result?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GameSessionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    result?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GameSessionCreateManyInput = {
+    id?: string
+    playedAt?: Date | string
+    result: string
+    city: string
     state: string
-    region: string
+    country: string
   }
 
-  export type AnalyticsUpdateManyMutationInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
+  export type GameSessionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    result?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AnalyticsUncheckedUpdateManyInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GameSessionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    result?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MetricsCreateInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-    analytics: AnalyticsCreateNestedOneWithoutMetricsInput
-  }
-
-  export type MetricsUncheckedCreateInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-    analyticsId: string
-  }
-
-  export type MetricsUpdateInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-    analytics?: AnalyticsUpdateOneRequiredWithoutMetricsNestedInput
-  }
-
-  export type MetricsUncheckedUpdateInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-    analyticsId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MetricsCreateManyInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-    analyticsId: string
-  }
-
-  export type MetricsUpdateManyMutationInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MetricsUncheckedUpdateManyInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-    analyticsId?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3538,44 +2117,31 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type MetricsListRelationFilter = {
-    every?: MetricsWhereInput
-    some?: MetricsWhereInput
-    none?: MetricsWhereInput
-  }
-
-  export type MetricsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AnalyticsCountOrderByAggregateInput = {
-    analyticsId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    cityIp?: SortOrder
-    country?: SortOrder
+  export type GameSessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    playedAt?: SortOrder
+    result?: SortOrder
+    city?: SortOrder
     state?: SortOrder
-    region?: SortOrder
+    country?: SortOrder
   }
 
-  export type AnalyticsMaxOrderByAggregateInput = {
-    analyticsId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    cityIp?: SortOrder
-    country?: SortOrder
+  export type GameSessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playedAt?: SortOrder
+    result?: SortOrder
+    city?: SortOrder
     state?: SortOrder
-    region?: SortOrder
+    country?: SortOrder
   }
 
-  export type AnalyticsMinOrderByAggregateInput = {
-    analyticsId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    cityIp?: SortOrder
-    country?: SortOrder
+  export type GameSessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    playedAt?: SortOrder
+    result?: SortOrder
+    city?: SortOrder
     state?: SortOrder
-    region?: SortOrder
+    country?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3610,137 +2176,12 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type AnalyticsScalarRelationFilter = {
-    is?: AnalyticsWhereInput
-    isNot?: AnalyticsWhereInput
-  }
-
-  export type MetricsCountOrderByAggregateInput = {
-    metricsId?: SortOrder
-    createdAt?: SortOrder
-    total_games?: SortOrder
-    analyticsId?: SortOrder
-  }
-
-  export type MetricsAvgOrderByAggregateInput = {
-    total_games?: SortOrder
-  }
-
-  export type MetricsMaxOrderByAggregateInput = {
-    metricsId?: SortOrder
-    createdAt?: SortOrder
-    total_games?: SortOrder
-    analyticsId?: SortOrder
-  }
-
-  export type MetricsMinOrderByAggregateInput = {
-    metricsId?: SortOrder
-    createdAt?: SortOrder
-    total_games?: SortOrder
-    analyticsId?: SortOrder
-  }
-
-  export type MetricsSumOrderByAggregateInput = {
-    total_games?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type MetricsCreateNestedManyWithoutAnalyticsInput = {
-    create?: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput> | MetricsCreateWithoutAnalyticsInput[] | MetricsUncheckedCreateWithoutAnalyticsInput[]
-    connectOrCreate?: MetricsCreateOrConnectWithoutAnalyticsInput | MetricsCreateOrConnectWithoutAnalyticsInput[]
-    createMany?: MetricsCreateManyAnalyticsInputEnvelope
-    connect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-  }
-
-  export type MetricsUncheckedCreateNestedManyWithoutAnalyticsInput = {
-    create?: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput> | MetricsCreateWithoutAnalyticsInput[] | MetricsUncheckedCreateWithoutAnalyticsInput[]
-    connectOrCreate?: MetricsCreateOrConnectWithoutAnalyticsInput | MetricsCreateOrConnectWithoutAnalyticsInput[]
-    createMany?: MetricsCreateManyAnalyticsInputEnvelope
-    connect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type MetricsUpdateManyWithoutAnalyticsNestedInput = {
-    create?: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput> | MetricsCreateWithoutAnalyticsInput[] | MetricsUncheckedCreateWithoutAnalyticsInput[]
-    connectOrCreate?: MetricsCreateOrConnectWithoutAnalyticsInput | MetricsCreateOrConnectWithoutAnalyticsInput[]
-    upsert?: MetricsUpsertWithWhereUniqueWithoutAnalyticsInput | MetricsUpsertWithWhereUniqueWithoutAnalyticsInput[]
-    createMany?: MetricsCreateManyAnalyticsInputEnvelope
-    set?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    disconnect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    delete?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    connect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    update?: MetricsUpdateWithWhereUniqueWithoutAnalyticsInput | MetricsUpdateWithWhereUniqueWithoutAnalyticsInput[]
-    updateMany?: MetricsUpdateManyWithWhereWithoutAnalyticsInput | MetricsUpdateManyWithWhereWithoutAnalyticsInput[]
-    deleteMany?: MetricsScalarWhereInput | MetricsScalarWhereInput[]
-  }
-
-  export type MetricsUncheckedUpdateManyWithoutAnalyticsNestedInput = {
-    create?: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput> | MetricsCreateWithoutAnalyticsInput[] | MetricsUncheckedCreateWithoutAnalyticsInput[]
-    connectOrCreate?: MetricsCreateOrConnectWithoutAnalyticsInput | MetricsCreateOrConnectWithoutAnalyticsInput[]
-    upsert?: MetricsUpsertWithWhereUniqueWithoutAnalyticsInput | MetricsUpsertWithWhereUniqueWithoutAnalyticsInput[]
-    createMany?: MetricsCreateManyAnalyticsInputEnvelope
-    set?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    disconnect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    delete?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    connect?: MetricsWhereUniqueInput | MetricsWhereUniqueInput[]
-    update?: MetricsUpdateWithWhereUniqueWithoutAnalyticsInput | MetricsUpdateWithWhereUniqueWithoutAnalyticsInput[]
-    updateMany?: MetricsUpdateManyWithWhereWithoutAnalyticsInput | MetricsUpdateManyWithWhereWithoutAnalyticsInput[]
-    deleteMany?: MetricsScalarWhereInput | MetricsScalarWhereInput[]
-  }
-
-  export type AnalyticsCreateNestedOneWithoutMetricsInput = {
-    create?: XOR<AnalyticsCreateWithoutMetricsInput, AnalyticsUncheckedCreateWithoutMetricsInput>
-    connectOrCreate?: AnalyticsCreateOrConnectWithoutMetricsInput
-    connect?: AnalyticsWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type AnalyticsUpdateOneRequiredWithoutMetricsNestedInput = {
-    create?: XOR<AnalyticsCreateWithoutMetricsInput, AnalyticsUncheckedCreateWithoutMetricsInput>
-    connectOrCreate?: AnalyticsCreateOrConnectWithoutMetricsInput
-    upsert?: AnalyticsUpsertWithoutMetricsInput
-    connect?: AnalyticsWhereUniqueInput
-    update?: XOR<XOR<AnalyticsUpdateToOneWithWhereWithoutMetricsInput, AnalyticsUpdateWithoutMetricsInput>, AnalyticsUncheckedUpdateWithoutMetricsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3808,161 +2249,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type MetricsCreateWithoutAnalyticsInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-  }
-
-  export type MetricsUncheckedCreateWithoutAnalyticsInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-  }
-
-  export type MetricsCreateOrConnectWithoutAnalyticsInput = {
-    where: MetricsWhereUniqueInput
-    create: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput>
-  }
-
-  export type MetricsCreateManyAnalyticsInputEnvelope = {
-    data: MetricsCreateManyAnalyticsInput | MetricsCreateManyAnalyticsInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type MetricsUpsertWithWhereUniqueWithoutAnalyticsInput = {
-    where: MetricsWhereUniqueInput
-    update: XOR<MetricsUpdateWithoutAnalyticsInput, MetricsUncheckedUpdateWithoutAnalyticsInput>
-    create: XOR<MetricsCreateWithoutAnalyticsInput, MetricsUncheckedCreateWithoutAnalyticsInput>
-  }
-
-  export type MetricsUpdateWithWhereUniqueWithoutAnalyticsInput = {
-    where: MetricsWhereUniqueInput
-    data: XOR<MetricsUpdateWithoutAnalyticsInput, MetricsUncheckedUpdateWithoutAnalyticsInput>
-  }
-
-  export type MetricsUpdateManyWithWhereWithoutAnalyticsInput = {
-    where: MetricsScalarWhereInput
-    data: XOR<MetricsUpdateManyMutationInput, MetricsUncheckedUpdateManyWithoutAnalyticsInput>
-  }
-
-  export type MetricsScalarWhereInput = {
-    AND?: MetricsScalarWhereInput | MetricsScalarWhereInput[]
-    OR?: MetricsScalarWhereInput[]
-    NOT?: MetricsScalarWhereInput | MetricsScalarWhereInput[]
-    metricsId?: StringFilter<"Metrics"> | string
-    createdAt?: DateTimeFilter<"Metrics"> | Date | string
-    total_games?: IntFilter<"Metrics"> | number
-    analyticsId?: StringFilter<"Metrics"> | string
-  }
-
-  export type AnalyticsCreateWithoutMetricsInput = {
-    analyticsId?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cityIp: string
-    country: string
-    state: string
-    region: string
-  }
-
-  export type AnalyticsUncheckedCreateWithoutMetricsInput = {
-    analyticsId?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cityIp: string
-    country: string
-    state: string
-    region: string
-  }
-
-  export type AnalyticsCreateOrConnectWithoutMetricsInput = {
-    where: AnalyticsWhereUniqueInput
-    create: XOR<AnalyticsCreateWithoutMetricsInput, AnalyticsUncheckedCreateWithoutMetricsInput>
-  }
-
-  export type AnalyticsUpsertWithoutMetricsInput = {
-    update: XOR<AnalyticsUpdateWithoutMetricsInput, AnalyticsUncheckedUpdateWithoutMetricsInput>
-    create: XOR<AnalyticsCreateWithoutMetricsInput, AnalyticsUncheckedCreateWithoutMetricsInput>
-    where?: AnalyticsWhereInput
-  }
-
-  export type AnalyticsUpdateToOneWithWhereWithoutMetricsInput = {
-    where?: AnalyticsWhereInput
-    data: XOR<AnalyticsUpdateWithoutMetricsInput, AnalyticsUncheckedUpdateWithoutMetricsInput>
-  }
-
-  export type AnalyticsUpdateWithoutMetricsInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AnalyticsUncheckedUpdateWithoutMetricsInput = {
-    analyticsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cityIp?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    region?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MetricsCreateManyAnalyticsInput = {
-    metricsId?: string
-    createdAt?: Date | string
-    total_games: number
-  }
-
-  export type MetricsUpdateWithoutAnalyticsInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MetricsUncheckedUpdateWithoutAnalyticsInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MetricsUncheckedUpdateManyWithoutAnalyticsInput = {
-    metricsId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    total_games?: IntFieldUpdateOperationsInput | number
   }
 
 

@@ -39,7 +39,7 @@ const GameLostScreen = ({ word, onPlayAgain }: GameLostScreenProps) => {
           </button>
           <Link
             href="/"
-            className="flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+            className="flex items-center justify-center border border-slate-500 bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-4 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-105"
           >
             <LogOut className="mr-2" /> <p>Sair do jogo</p>
           </Link>

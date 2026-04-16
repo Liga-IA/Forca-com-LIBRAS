@@ -106,6 +106,8 @@ exports.Prisma.MetricsScalarFieldEnum = {
   metricsId: 'metricsId',
   createdAt: 'createdAt',
   total_games: 'total_games',
+  wins: 'wins',
+  losses: 'losses',
   analyticsId: 'analyticsId'
 };
 
@@ -163,6 +165,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -171,13 +174,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Analytics {\n  analyticsId String   @id @default(uuid())\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  cityIp      String\n  country     String\n  state       String\n  region      String   @unique\n\n  metrics Metrics[]\n\n  @@map(\"analytics\")\n}\n\nmodel Metrics {\n  metricsId   String    @id @default(uuid())\n  createdAt   DateTime  @default(now())\n  total_games Int\n  analyticsId String\n  analytics   Analytics @relation(fields: [analyticsId], references: [analyticsId], onDelete: Cascade)\n\n  @@index([analyticsId])\n  @@map(\"metrics\")\n}\n",
-  "inlineSchemaHash": "8068684914e44fef8bec0181163317265f4eb51ca642587b82fb0280db1a0cb2",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Analytics {\n  analyticsId String   @id @default(uuid())\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  cityIp      String\n  country     String\n  state       String\n  region      String   @unique\n\n  metrics Metrics[]\n\n  @@map(\"analytics\")\n}\n\nmodel Metrics {\n  metricsId   String    @id @default(uuid())\n  createdAt   DateTime  @default(now())\n  total_games Int\n  wins        Int       @default(0)\n  losses      Int       @default(0)\n  analyticsId String\n  analytics   Analytics @relation(fields: [analyticsId], references: [analyticsId], onDelete: Cascade)\n\n  @@index([analyticsId])\n  @@map(\"metrics\")\n}\n",
+  "inlineSchemaHash": "025bbed41f08bcf230930448d77fb57f0ad087ffa2b8f26041c47ef827a4be77",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Analytics\":{\"fields\":[{\"name\":\"analyticsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"cityIp\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"region\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metrics\",\"kind\":\"object\",\"type\":\"Metrics\",\"relationName\":\"AnalyticsToMetrics\"}],\"dbName\":\"analytics\"},\"Metrics\":{\"fields\":[{\"name\":\"metricsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"total_games\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"analyticsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"analytics\",\"kind\":\"object\",\"type\":\"Analytics\",\"relationName\":\"AnalyticsToMetrics\"}],\"dbName\":\"metrics\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Analytics\":{\"fields\":[{\"name\":\"analyticsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"cityIp\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"region\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metrics\",\"kind\":\"object\",\"type\":\"Metrics\",\"relationName\":\"AnalyticsToMetrics\"}],\"dbName\":\"analytics\"},\"Metrics\":{\"fields\":[{\"name\":\"metricsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"total_games\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"wins\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"losses\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"analyticsId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"analytics\",\"kind\":\"object\",\"type\":\"Analytics\",\"relationName\":\"AnalyticsToMetrics\"}],\"dbName\":\"metrics\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

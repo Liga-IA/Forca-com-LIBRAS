@@ -1,20 +1,15 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const dynamic = "force-dynamic"
 
-import { prisma } from "@/lib/prisma";
-import Metrics from "./metrics";
+import { getSessionsGroupedByCity } from "@/server/db/game-sessions"
+import Metrics from "./metrics"
 
 export default async function AnalyticsDashboard() {
-  const data = await prisma.analytics.findMany({
-    include: {
-      metrics: true,
-    },
-  });
-  console.log(data);
-  console.log(data[0].metrics);
+  const data = await getSessionsGroupedByCity()
+
   return (
-    <div>
-      <Metrics />
-    </div>
-  );
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white p-8">
+      <h1 className="text-4xl font-bold mb-8">Dashboard de Análises</h1>
+      <Metrics data={data} />
+    </main>
+  )
 }

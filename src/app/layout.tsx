@@ -1,7 +1,9 @@
-import { GeolocationService } from "@/lib/geolocation";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,15 +21,11 @@ export const metadata: Metadata = {
     "Jogue a Forca com LIBRAS, uma versão do jogo Forca com tradução para Libras",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const cityIp = (await GeolocationService.getCityIP()) || "0.0.0.0";
-  const locationData = await GeolocationService.getLocationByIP(cityIp);
-  await GeolocationService.saveLocation(cityIp, locationData);
-
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", figtree.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

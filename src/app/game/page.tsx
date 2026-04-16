@@ -8,7 +8,7 @@ import { WordDisplay } from "@/components/wordDisplay";
 import { WrongLettersDisplay } from "@/components/wrongLattersDisplay";
 import { challenges } from "@/utils/dictionary";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { saveGame } from "../actions";
 
 const getRandomChallenge = () => {
@@ -22,31 +22,59 @@ export default function GamePage() {
   const [wrongLetters, setWrongLetters] = useState<string[]>([]);
   const [lives, setLives] = useState(6);
   const [score, setScore] = useState(0);
+  const [letterPoints, setLetterPoints] = useState(0);
   const [combo, setCombo] = useState(0);
-  const [initAdviseModal, setInitAdviseModal] = useState(false);
+  const [initAdviseModal, setInitAdviseModal] = useState(true);
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
     "playing",
   );
-
   const [realTimeDetectedSign, setRealTimeDetectedSign] = useState<
     string | null
   >(null);
+  const [stabilityProgress, setStabilityProgress] = useState(0);
   const [showParticles, setShowParticles] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+
+  // Evita duplo-fire do saveGame em React StrictMode
+  const gameEndSaved = useRef(false);
 
   const handlePlayAgain = () => {
     setChallenge(getRandomChallenge());
     setGuessedLetters(new Set<string>());
     setWrongLetters([]);
     setLives(6);
+    setScore(0);
+    setLetterPoints(0);
     setCombo(0);
     setGameState("playing");
     setShowParticles(false);
-    // setMetrics();
+    setCameraError(null);
+    gameEndSaved.current = false;
   };
 
-  useEffect(() => {
-    saveGame();
+  const handleCameraReady = useCallback(() => {
+    setInitAdviseModal(false);
   }, []);
+
+  const handleCameraError = useCallback(
+    (type: "permission-denied" | "no-camera" | "unknown") => {
+      setInitAdviseModal(false);
+      if (type === "permission-denied") {
+        setCameraError(
+          "Permissão de câmera negada. Clique no ícone de câmera na barra de endereços e permita o acesso.",
+        );
+      } else if (type === "no-camera") {
+        setCameraError(
+          "Nenhuma câmera encontrada. Conecte uma câmera e recarregue a página.",
+        );
+      } else {
+        setCameraError(
+          "Não foi possível acessar a câmera. Recarregue a página e tente novamente.",
+        );
+      }
+    },
+    [],
+  );
 
   const handleRealTimeSignDetected = (sign: string | null) => {
     setRealTimeDetectedSign(sign);
@@ -70,6 +98,7 @@ export default function GamePage() {
         const comboMultiplier = Math.min(combo + 1, 5);
         const points = 10 * comboMultiplier;
         setScore((prevScore) => prevScore + points);
+        setLetterPoints((prev) => prev + points);
         setCombo((prev) => prev + 1);
         setShowParticles(true);
         setTimeout(() => setShowParticles(false), 1000);
@@ -81,13 +110,6 @@ export default function GamePage() {
     },
     [gameState, guessedLetters, wrongLetters, challenge.word, combo],
   );
-
-  // Abre o modal ao carregar a página e fecha automaticamente após 5s
-  useEffect(() => {
-    setInitAdviseModal(true);
-    const timer = setTimeout(() => setInitAdviseModal(false), 7000);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (gameState !== "playing") return;
@@ -106,6 +128,15 @@ export default function GamePage() {
       setScore((prev) => prev + lives * 50 + combo * 25);
     }
   }, [lives, guessedLetters, challenge.word, gameState, combo]);
+
+  // Salva a partida no fim do jogo (vitória ou derrota)
+  useEffect(() => {
+    if (gameState === "playing") return;
+    if (gameEndSaved.current) return;
+
+    gameEndSaved.current = true;
+    saveGame(gameState === "won" ? "won" : "lost");
+  }, [gameState]);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
@@ -145,6 +176,7 @@ export default function GamePage() {
             </div>
           </div>
         </header>
+
         {gameState === "won" && (
           <div
             className="w-full flex justify-center items-center"
@@ -153,6 +185,9 @@ export default function GamePage() {
             <GameWonScreen
               score={score}
               word={challenge.word}
+              letterPoints={letterPoints}
+              winBonus={lives * 50}
+              comboBonus={combo * 25}
               onPlayAgain={handlePlayAgain}
             />
           </div>
@@ -179,22 +214,58 @@ export default function GamePage() {
                   <GameCanvas
                     onSignDetected={handleSignDetected}
                     onRealTimeSignDetected={handleRealTimeSignDetected}
+                    onReady={handleCameraReady}
+                    onStabilityProgress={setStabilityProgress}
+                    onCameraError={handleCameraError}
                   />
 
-                  <div className="absolute top-4 left-4 bg-black/70 backdrop-blur rounded-lg p-3">
-                    <p className="text-white text-sm font-medium">
-                      Sinal:{" "}
-                      <span
-                        className={`font-bold ${
-                          realTimeDetectedSign
-                            ? "text-cyan-400"
-                            : "text-gray-400"
-                        }`}
-                      >
-                        {realTimeDetectedSign || "Aguardando..."}
-                      </span>
-                    </p>
-                  </div>
+                  {/* Overlay de erro de câmera */}
+                  {cameraError && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/80 rounded-xl p-6 text-center z-10">
+                      <div className="space-y-4">
+                        <span className="text-4xl">📷</span>
+                        <p className="text-white text-sm leading-relaxed max-w-xs">
+                          {cameraError}
+                        </p>
+                        <button
+                          onClick={() => window.location.reload()}
+                          className="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                        >
+                          Recarregar página
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Overlay de sinal detectado com barra de progresso */}
+                  {!cameraError && (
+                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur rounded-lg p-3 min-w-[150px]">
+                      <p className="text-white text-base font-medium mb-1">
+                        Sinal:{" "}
+                        <span
+                          className={`text-lg font-bold ${
+                            realTimeDetectedSign
+                              ? "text-cyan-400"
+                              : "text-gray-400"
+                          }`}
+                        >
+                          {realTimeDetectedSign || "Aguardando..."}
+                        </span>
+                      </p>
+                      {realTimeDetectedSign &&
+                        stabilityProgress > 0 &&
+                        stabilityProgress < 1 && (
+                          <div className="w-full bg-slate-700 rounded-full h-2">
+                            <div
+                              className="bg-cyan-400 h-2 rounded-full transition-all duration-75"
+                              style={{
+                                width: `${stabilityProgress * 100}%`,
+                              }}
+                            />
+                          </div>
+                        )}
+                    </div>
+                  )}
 
                   {showParticles && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -235,6 +306,8 @@ export default function GamePage() {
               <div className="bg-slate-800/40 backdrop-blur rounded-2xl p-6 border border-slate-600/50">
                 <div className="w-full h-48 bg-slate-700/50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
                   <Image
+                    width={400}
+                    height={300}
                     src={challenge.image}
                     alt={challenge.description}
                     className="h-full w-full object-contain transition-transform hover:scale-110"
