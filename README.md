@@ -28,7 +28,7 @@ Principais páginas e componentes:
 1. Instale as dependências:
 
    ```bash
-   npm install
+    pnpm install
    ```
 
 2. Ambiente de desenvolvimento:
