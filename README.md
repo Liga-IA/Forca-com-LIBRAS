@@ -34,7 +34,7 @@ Principais páginas e componentes:
 2. Ambiente de desenvolvimento:
 
    ```bash
-   npm run dev
+    pnpm dev
    # abra http://localhost:3000
    ```
 
@@ -72,7 +72,6 @@ Arquivos relevantes:
 - `src/lib/modelService.ts` — carrega o modelo via caminho relativo `'/libras-model/model.json'` (sem depender de `window`).
 - `public/hand_landmarker.task` — arquivo necessário pelo MediaPipe.
 - `public/libras-model/` — artefatos do modelo TFJS.
-
 
 ## Estrutura do Projeto (resumo)
 
