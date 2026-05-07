@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(if \\(-not \\(Test-Path scripts\\)\\) { New-Item -ItemType Directory -Path scripts | Out-Null }; \"ok\")"
+    ]
+  }
+}

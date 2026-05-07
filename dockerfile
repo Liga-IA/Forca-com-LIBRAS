@@ -47,14 +47,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/generated ./generated
 
-EXPOSE 3000
-CMD ["node", "server.js"]
+# Kit de migration isolado em /migrate (node_modules completo do stage deps,
+# evita conflito com o node_modules enxuto do standalone em /app)
+COPY --from=deps /app/node_modules /migrate/node_modules
+COPY --from=builder /app/prisma /migrate/prisma
+COPY package.json package-lock.json prisma.config.ts /migrate/
 
-# Stage 4: Migration
-FROM node:20-alpine AS migration
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/generated ./generated
-COPY package.json package-lock.json ./
-CMD ["npx", "prisma", "migrate", "deploy"]
+EXPOSE 3000
+CMD ["sh", "-c", "cd /migrate && node ./node_modules/prisma/build/index.js migrate deploy && cd /app && node server.js"]
