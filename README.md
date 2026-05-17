@@ -100,6 +100,7 @@ src/
   middleware.ts
 ```
 
+Developed by LIA
 ## Créditos
 
 - [MediaPipe Tasks Vision](https://developers.google.com/mediapipe)
