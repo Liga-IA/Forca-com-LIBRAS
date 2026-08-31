@@ -107,30 +107,27 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#070012] p-2 sm:p-4 lg:p-6 flex items-center justify-center">
-      {/* Blobs animados */}
-      <div className="absolute top-0 -left-1/4 h-96 w-96 rounded-full bg-indigo-950 opacity-20 blur-3xl" />
-      <div className="absolute top-0 -right-1/4 h-96 w-96 rounded-full bg-purple-950 opacity-20 blur-3xl" />
+      {/* Blobs animados */}{" "}
+      <div className="absolute top-0 -left-1/4 h-96 w-96 rounded-full bg-indigo-950 opacity-20 blur-3xl" />{" "}
+      <div className="absolute top-0 -right-1/4 h-96 w-96 rounded-full bg-purple-950 opacity-20 blur-3xl" />{" "}
       <div className="absolute -bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-blue-950 opacity-20 blur-3xl" />
-
       {/* Grid fundo */}
       <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
       <div className="relative z-10 w-full max-w-[1800px] overflow-hidden rounded-[30px] border border-fuchsia-500/20 bg-[#090511]/85 backdrop-blur-2xl shadow-[0_0_50px_rgba(168,85,247,0.2)]">
         <div
-          className="flex transition-transform duration-500 ease-in-out"
+          className="flex w-[200%] transition-transform duration-500 ease-in-out"
           style={{
-            width: "200%",
             transform: showCategories ? "translateX(-50%)" : "translateX(0)",
           }}
         >
           {/* ── Painel 1: Boas-vindas ── */}
           <div
-            className="grid h-[100dvh] max-h-[860px] grid-cols-1 lg:grid-cols-2"
+            className="grid min-h-[calc(100dvh-1rem)] max-h-[860px] grid-cols-1 lg:min-h-[700px] lg:grid-cols-2"
             style={{ width: "50%" }}
           >
-            <div className="relative flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 bg-gradient-to-br from-[#12092a] via-[#090511] to-[#05030d] p-5 sm:p-8">
+            <div className="relative flex flex-col justify-between border-b border-white/5 bg-gradient-to-br from-[#12092a] via-[#090511] to-[#05030d] p-5 sm:p-8 lg:border-b-0 lg:border-r">
               <div className="flex items-center gap-3">
-                <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-[#8b5cf6]/40 bg-[#130a2d] shadow-[0_0_30px_rgba(139,92,246,0.35)]">
+                <div className="flex h-12 w-12 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl border border-[#8b5cf6]/40 bg-[#130a2d] shadow-[0_0_30px_rgba(139,92,246,0.35)]">
                   <Image
                     src="/liga_logo.png"
                     alt="Forca LIBRAS logo"
@@ -140,7 +137,7 @@ export default function Home() {
                   />
                 </div>
 
-                <h1 className="text-2xl sm:text-4xl font-extrabold tracking-wide text-white uppercase">
+                <h1 className="text-xl sm:text-4xl font-extrabold tracking-wide text-white uppercase">
                   FORCA{" "}
                   <span className="bg-gradient-to-r from-[#5B8CFF] to-[#C45CFF] bg-clip-text text-transparent">
                     LIBRAS
@@ -148,19 +145,19 @@ export default function Home() {
                 </h1>
               </div>
 
-              <div className="relative flex flex-1 items-center justify-center overflow-hidden py-4">
-                <div className="absolute h-[260px] w-[260px] sm:h-[430px] sm:w-[430px] rounded-full border border-[#8b5cf6]/15 bg-[#8b5cf6]/5 blur-3xl" />
+              <div className="relative flex min-h-[280px] flex-1 items-center justify-center overflow-hidden py-4 sm:min-h-[350px]">
+                <div className="absolute h-[220px] w-[220px] rounded-full border border-[#8b5cf6]/15 bg-[#8b5cf6]/5 blur-3xl sm:h-[430px] sm:w-[430px]" />
 
-                <div className="absolute h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full border border-[#8b5cf6]/10" />
+                <div className="absolute h-[260px] w-[260px] rounded-full border border-[#8b5cf6]/10 sm:h-[480px] sm:w-[480px]" />
 
-                <div className="absolute bottom-[120px] sm:bottom-[200px] h-20 sm:h-28 w-[220px] sm:w-[360px] rounded-full bg-gradient-to-r from-[#d946ef]/40 via-[#8b5cf6]/30 to-[#3b82f6]/40 blur-3xl" />
+                <div className="absolute bottom-[80px] h-16 w-[200px] rounded-full bg-gradient-to-r from-[#d946ef]/40 via-[#8b5cf6]/30 to-[#3b82f6]/40 blur-3xl sm:bottom-[120px] sm:h-28 sm:w-[360px]" />
 
                 <Image
                   src="/mao3d.png"
                   alt="Mão 3D"
                   width={900}
                   height={900}
-                  className="relative z-10 object-contain translate-y-4 sm:translate-y-6 drop-shadow-[0_0_80px_rgba(139,92,246,0.45)]"
+                  className="relative z-10 h-auto max-h-[48dvh] w-auto max-w-[90%] object-contain translate-y-2 drop-shadow-[0_0_80px_rgba(139,92,246,0.45)] sm:max-h-[55dvh] sm:translate-y-6"
                 />
 
                 <div className="absolute left-4 top-20 h-4 w-4 rounded-full border-2 border-[#d946ef]/70" />
@@ -171,14 +168,14 @@ export default function Home() {
             </div>
 
             <div className="relative flex flex-col justify-center bg-gradient-to-br from-[#090511] via-[#0b0717] to-[#05030d] px-5 py-8 sm:px-10 sm:py-12">
-              <div className="absolute right-4 top-4 sm:right-8 sm:top-8 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-xl">
+              <div className="absolute right-4 top-4 hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-xl sm:right-8 sm:top-8 sm:block">
                 <span className="text-sm sm:text-xl font-medium tracking-wide text-white/70">
                   ✦ Aprenda. Jogue. Conecte-se.
                 </span>
               </div>
 
-              <div className="max-w-xl">
-                <span className="mb-4 block text-3xl sm:text-4xl font-medium text-[#8b5cf6]">
+              <div className="w-full max-w-xl">
+                <span className="mb-4 block text-2xl sm:text-4xl font-medium text-[#8b5cf6]">
                   Olá, seja bem-vindo(a)!
                 </span>
 
@@ -192,7 +189,7 @@ export default function Home() {
 
                 <div className="mb-6 h-1 w-20 rounded-full bg-gradient-to-r from-[#5B8CFF] to-[#d946ef]" />
 
-                <p className="mb-8 text-lg sm:text-2xl leading-relaxed text-white/60">
+                <p className="mb-8 text-base sm:text-2xl leading-relaxed text-white/60">
                   Teste suas habilidades em{" "}
                   <span className="font-semibold text-[#a855f7]">LIBRAS</span> e
                   descubra novas palavras! Aprenda, divirta-se e conecte-se com
@@ -201,11 +198,11 @@ export default function Home() {
 
                 <button
                   onClick={() => setShowCategories(true)}
-                  className="group flex h-14 sm:h-16 w-full items-center justify-center gap-4 rounded-2xl bg-gradient-to-r from-[#5b21b6] via-[#9333ea] to-[#d946ef] text-xl font-bold text-white shadow-[0_0_45px_rgba(168,85,247,0.45)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_65px_rgba(168,85,247,0.7)]"
+                  className="group flex h-14 sm:h-16 w-full items-center justify-center gap-3 sm:gap-4 rounded-2xl bg-gradient-to-r from-[#5b21b6] via-[#9333ea] to-[#d946ef] text-xl font-bold text-white shadow-[0_0_45px_rgba(168,85,247,0.45)] transition-all duration-300 hover:shadow-[0_0_65px_rgba(168,85,247,0.7)] active:scale-[0.99]"
                 >
-                  <Play className="h-6 w-6 fill-white transition-transform duration-300 group-hover:translate-x-1" />
+                  <Play className="h-5 w-5 sm:h-6 sm:w-6 fill-white transition-transform duration-300 group-hover:translate-x-1" />
 
-                  <p className="text-2xl sm:text-3xl text-white">
+                  <p className="text-xl sm:text-3xl text-white">
                     Iniciar o jogo
                   </p>
                 </button>
@@ -215,7 +212,7 @@ export default function Home() {
 
           {/* ── Painel 2: Categorias ── */}
           <div
-            className="relative flex h-[100dvh] max-h-[860px] flex-col overflow-hidden p-4 sm:p-6"
+            className="relative flex min-h-[calc(100dvh-1rem)] max-h-[860px] flex-col overflow-hidden p-4 sm:p-6 lg:min-h-[700px]"
             style={{ width: "50%" }}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.18),transparent_55%)] pointer-events-none" />
@@ -230,13 +227,13 @@ export default function Home() {
             <div className="relative z-10 mb-5 flex items-center gap-3 sm:gap-4">
               <button
                 onClick={() => setShowCategories(false)}
-                className="group flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border border-fuchsia-500/20 bg-white/5 text-fuchsia-300 backdrop-blur-md transition-all duration-300 hover:bg-fuchsia-500/10 hover:shadow-[0_0_25px_rgba(217,70,239,0.5)]"
+                className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-fuchsia-500/20 bg-white/5 text-fuchsia-300 backdrop-blur-md transition-all duration-300 hover:bg-fuchsia-500/10 hover:shadow-[0_0_25px_rgba(217,70,239,0.5)]"
                 aria-label="Voltar"
               >
-                <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7 transition-transform duration-300 group-hover:-translate-x-1" />
+                <ChevronLeft className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
               </button>
 
-              <div>
+              <div className="min-w-0">
                 <h2 className="text-2xl sm:text-4xl font-black text-white leading-none tracking-tight">
                   Escolha um{" "}
                   <span className="bg-gradient-to-r from-violet-400 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
@@ -244,42 +241,42 @@ export default function Home() {
                   </span>
                 </h2>
 
-                <p className="mt-2 text-sm sm:text-lg text-zinc-400">
+                <p className="mt-2 text-xs sm:text-lg text-zinc-400">
                   As palavras serão filtradas pela categoria
                 </p>
               </div>
             </div>
 
             {/* Grade de categorias */}
-            <div className="relative z-10 grid flex-1 grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto overflow-x-hidden pr-1">
+            <div className="relative z-10 grid flex-1 grid-cols-1 gap-3 overflow-y-auto overflow-x-hidden pr-1 sm:grid-cols-2">
               {/* "Todas" ocupa a linha toda */}
               <button
                 onClick={() => handleSelectCategory("todas")}
-                className={`group relative overflow-hidden rounded-[28px] border border-fuchsia-500/20 bg-gradient-to-r ${CATEGORIES[0].gradient} p-[1px] transition-all duration-300 hover:scale-[1.01] sm:col-span-2`}
+                className={`group relative min-h-[120px] overflow-hidden rounded-[24px] border border-fuchsia-500/20 bg-gradient-to-r ${CATEGORIES[0].gradient} p-[1px] transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(217,70,239,0.3)] sm:col-span-2 sm:min-h-[140px]`}
               >
-                <div className="relative flex items-center justify-between rounded-[28px] bg-[#12001d] px-4 sm:px-6 py-4 sm:py-5 shadow-[0_0_40px_rgba(217,70,239,0.35)]">
+                <div className="relative flex h-full min-h-[118px] items-center justify-between rounded-[24px] bg-[#12001d] px-4 py-5 shadow-[0_0_40px_rgba(217,70,239,0.35)] sm:min-h-[138px] sm:px-6 sm:py-6">
                   <div className="absolute inset-0 opacity-70 bg-gradient-to-r from-fuchsia-500/10 via-transparent to-violet-500/10" />
 
-                  <div className="relative z-10 flex items-center gap-4">
+                  <div className="relative z-10 flex min-w-0 items-center gap-4 sm:gap-5">
                     <div
-                      className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-3xl ${CATEGORIES[0].iconBg}`}
+                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${CATEGORIES[0].iconBg} sm:h-20 sm:w-20 sm:rounded-3xl`}
                     >
-                      <LayoutGrid className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      <LayoutGrid className="h-7 w-7 sm:h-10 sm:w-10 text-white" />
                     </div>
 
-                    <div className="text-left">
-                      <p className="text-2xl sm:text-4xl font-black leading-none text-white">
+                    <div className="min-w-0 text-left">
+                      <p className="truncate text-xl sm:text-4xl font-black leading-none text-white">
                         {CATEGORIES[0].label}
                       </p>
 
-                      <p className="mt-1 sm:mt-2 text-sm sm:text-lg text-white/70">
+                      <p className="mt-2 text-xs sm:mt-3 sm:text-lg text-white/70">
                         {countByCategory("todas")} palavras disponíveis
                       </p>
                     </div>
                   </div>
 
-                  <div className="hidden sm:flex h-14 w-14 items-center justify-center rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.7)]">
-                    <ArrowRight className="h-7 w-7 text-fuchsia-300" />
+                  <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.7)]">
+                    <ArrowRight className="h-6 w-6 text-fuchsia-300" />
                   </div>
                 </div>
               </button>
@@ -292,29 +289,29 @@ export default function Home() {
                   <button
                     key={cat.id}
                     onClick={() => handleSelectCategory(cat.id)}
-                    className={`group relative overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br ${cat.gradient} p-[1px] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]`}
+                    className={`group relative min-h-[150px] overflow-hidden rounded-[22px] border border-white/10 bg-gradient-to-br ${cat.gradient} p-[1px] transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]`}
                   >
-                    <div className="relative flex h-full flex-col justify-between rounded-[24px] bg-[#100018] p-4 sm:p-5 shadow-[0_0_35px_rgba(168,85,247,0.18)]">
+                    <div className="relative flex h-full min-h-[148px] flex-col justify-between rounded-[22px] bg-[#100018] p-4 shadow-[0_0_35px_rgba(168,85,247,0.18)] sm:p-5">
                       <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-white/5 to-transparent" />
 
                       <div className="relative z-10 flex items-start justify-between">
                         <div
-                          className={`flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl ${cat.iconBg}`}
+                          className={`flex h-12 w-12 items-center justify-center rounded-2xl ${cat.iconBg} sm:h-16 sm:w-16`}
                         >
-                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
+                          <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                         </div>
 
-                        <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all duration-300 group-hover:bg-white/10 group-hover:shadow-[0_0_18px_rgba(255,255,255,0.25)]">
-                          <ArrowRight className="h-5 w-5 text-white" />
+                        <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all duration-300 group-hover:bg-white/10 group-hover:shadow-[0_0_18px_rgba(255,255,255,0.25)]">
+                          <ArrowRight className="h-4 w-4 text-white" />
                         </div>
                       </div>
 
-                      <div className="relative z-10 mt-5 text-left">
-                        <p className="text-2xl sm:text-3xl font-black leading-none text-white">
+                      <div className="relative z-10 mt-4 text-left sm:mt-5">
+                        <p className="text-xl sm:text-3xl font-black leading-none text-white">
                           {cat.label}
                         </p>
 
-                        <p className="mt-2 text-sm sm:text-lg text-white/65">
+                        <p className="mt-2 text-xs sm:text-lg text-white/65">
                           {countByCategory(cat.id)} palavras
                         </p>
                       </div>
