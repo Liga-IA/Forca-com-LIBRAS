@@ -1,7 +1,18 @@
 "use client";
 
 import { challenges, type Category } from "@/utils/dictionary";
-import { ChevronLeft, Play } from "lucide-react";
+import {
+  ChevronLeft,
+  Play,
+  LayoutGrid,
+  PawPrint,
+  Leaf,
+  Laptop,
+  Bus,
+  House,
+  Telescope,
+  ArrowRight,
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,52 +20,75 @@ import { useState } from "react";
 type CategoryOption = {
   id: Category | "todas";
   label: string;
-  icon: string;
+  icon: React.ElementType;
   gradient: string;
+  shadow?: string;
+  iconBg: string;
 };
 
 const CATEGORIES: CategoryOption[] = [
   {
     id: "todas",
     label: "Todas as Categorias",
-    icon: "🎮",
-    gradient: "from-purple-600 to-indigo-600",
+    icon: LayoutGrid,
+    gradient: "from-fuchsia-600 via-purple-600 to-violet-700",
+    shadow: "shadow-fuchsia-500/40",
+    iconBg:
+      "bg-gradient-to-br from-fuchsia-500 to-violet-600 shadow-[0_0_25px_rgba(217,70,239,0.75)]",
   },
   {
     id: "animais",
     label: "Animais",
-    icon: "🐾",
-    gradient: "from-green-600 to-emerald-600",
+    icon: PawPrint,
+    gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+    shadow: "shadow-emerald-400/30",
+    iconBg:
+      "bg-gradient-to-br from-emerald-400 to-cyan-500 shadow-[0_0_25px_rgba(16,185,129,0.75)]",
   },
   {
     id: "natureza",
     label: "Natureza",
-    icon: "🌿",
-    gradient: "from-teal-500 to-green-600",
+    icon: Leaf,
+    gradient: "from-lime-500 via-green-500 to-emerald-700",
+    shadow: "shadow-lime-400/30",
+    iconBg:
+      "bg-gradient-to-br from-lime-400 to-emerald-600 shadow-[0_0_25px_rgba(132,204,22,0.75)]",
   },
   {
     id: "astronomia",
     label: "Astronomia",
-    icon: "🌌",
-    gradient: "from-indigo-600 to-violet-700",
+    icon: Telescope,
+    gradient: "from-violet-700 via-fuchsia-600 to-purple-500",
+    shadow: "shadow-violet-400/30",
+    iconBg:
+      "bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-[0_0_25px_rgba(168,85,247,0.75)]",
   },
   {
     id: "tecnologia",
     label: "Tecnologia",
-    icon: "💻",
-    gradient: "from-blue-600 to-cyan-500",
+    icon: Laptop,
+    gradient: "from-blue-600 via-indigo-500 to-cyan-500",
+    shadow: "shadow-blue-400/30",
+    iconBg:
+      "bg-gradient-to-br from-blue-500 to-cyan-500 shadow-[0_0_25px_rgba(59,130,246,0.75)]",
   },
   {
     id: "transporte",
     label: "Transporte",
-    icon: "🚗",
-    gradient: "from-orange-500 to-amber-500",
+    icon: Bus,
+    gradient: "from-amber-500 via-orange-500 to-pink-500",
+    shadow: "shadow-amber-400/30",
+    iconBg:
+      "bg-gradient-to-br from-amber-400 to-orange-500 shadow-[0_0_25px_rgba(251,146,60,0.75)]",
   },
   {
     id: "cotidiano",
     label: "Cotidiano",
-    icon: "🏠",
-    gradient: "from-rose-500 to-pink-600",
+    icon: House,
+    gradient: "from-rose-500 via-pink-500 to-fuchsia-600",
+    shadow: "shadow-rose-400/30",
+    iconBg:
+      "bg-gradient-to-br from-rose-500 to-fuchsia-600 shadow-[0_0_25px_rgba(244,63,94,0.75)]",
   },
 ];
 
@@ -72,132 +106,226 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-6 overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[#070012] p-2 sm:p-4 lg:p-6 flex items-center justify-center">
       {/* Blobs animados */}
-      <div className="absolute top-0 -left-1/4 w-96 h-96 bg-indigo-950 rounded-full filter blur-3xl opacity-20 animate-blob" />
-      <div className="absolute top-0 -right-1/4 w-96 h-96 bg-purple-950 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-      <div className="absolute -bottom-1/4 left-1/4 w-96 h-96 bg-blue-950 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+      <div className="absolute top-0 -left-1/4 h-96 w-96 rounded-full bg-indigo-950 opacity-20 blur-3xl" />
+      <div className="absolute top-0 -right-1/4 h-96 w-96 rounded-full bg-purple-950 opacity-20 blur-3xl" />
+      <div className="absolute -bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-blue-950 opacity-20 blur-3xl" />
 
-      <main className="relative z-10 flex flex-col items-center w-full max-w-2xl">
-        {/* Header */}
-        <header className="mb-10 flex items-center justify-center gap-5 text-white">
-          <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
-            <Image
-              src="/liga_logo.png"
-              alt="Forca LIBRAS logo"
-              width={56}
-              height={56}
-              className="rounded"
-            />
-          </div>
-          <h1 className="text-5xl font-bold tracking-wider uppercase">
-            FORCA LIBRAS
-          </h1>
-        </header>
+      {/* Grid fundo */}
+      <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-        {/* Card com slider */}
-        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl w-full overflow-hidden">
+      <div className="relative z-10 w-full max-w-[1800px] overflow-hidden rounded-[30px] border border-fuchsia-500/20 bg-[#090511]/85 backdrop-blur-2xl shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{
+            width: "200%",
+            transform: showCategories ? "translateX(-50%)" : "translateX(0)",
+          }}
+        >
+          {/* ── Painel 1: Boas-vindas ── */}
           <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              width: "200%",
-              transform: showCategories ? "translateX(-50%)" : "translateX(0)",
-            }}
+            className="grid h-[100dvh] max-h-[860px] grid-cols-1 lg:grid-cols-2"
+            style={{ width: "50%" }}
           >
-            {/* ── Painel 1: Boas-vindas ── */}
-            <div className="p-8 text-center" style={{ width: "50%" }}>
-              {/* Ícone */}
-              <div className="mx-auto mb-6 flex h-32 w-32 items-center justify-center rounded-full bg-blue-500/20 text-blue-500">
-                <span
-                  className="material-icons animate-float-gentle"
-                  style={{
-                    fontSize: "72px",
-                    fontVariationSettings:
-                      "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48",
-                  }}
-                >
-                  sign_language
+            <div className="relative flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 bg-gradient-to-br from-[#12092a] via-[#090511] to-[#05030d] p-5 sm:p-8">
+              <div className="flex items-center gap-3">
+                <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-[#8b5cf6]/40 bg-[#130a2d] shadow-[0_0_30px_rgba(139,92,246,0.35)]">
+                  <Image
+                    src="/liga_logo.png"
+                    alt="Forca LIBRAS logo"
+                    width={70}
+                    height={70}
+                    className="rounded"
+                  />
+                </div>
+
+                <h1 className="text-2xl sm:text-4xl font-extrabold tracking-wide text-white uppercase">
+                  FORCA{" "}
+                  <span className="bg-gradient-to-r from-[#5B8CFF] to-[#C45CFF] bg-clip-text text-transparent">
+                    LIBRAS
+                  </span>
+                </h1>
+              </div>
+
+              <div className="relative flex flex-1 items-center justify-center overflow-hidden py-4">
+                <div className="absolute h-[260px] w-[260px] sm:h-[430px] sm:w-[430px] rounded-full border border-[#8b5cf6]/15 bg-[#8b5cf6]/5 blur-3xl" />
+
+                <div className="absolute h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full border border-[#8b5cf6]/10" />
+
+                <div className="absolute bottom-[120px] sm:bottom-[200px] h-20 sm:h-28 w-[220px] sm:w-[360px] rounded-full bg-gradient-to-r from-[#d946ef]/40 via-[#8b5cf6]/30 to-[#3b82f6]/40 blur-3xl" />
+
+                <Image
+                  src="/mao3d.png"
+                  alt="Mão 3D"
+                  width={900}
+                  height={900}
+                  className="relative z-10 object-contain translate-y-4 sm:translate-y-6 drop-shadow-[0_0_80px_rgba(139,92,246,0.45)]"
+                />
+
+                <div className="absolute left-4 top-20 h-4 w-4 rounded-full border-2 border-[#d946ef]/70" />
+                <div className="absolute right-8 top-16 h-5 w-5 rounded-full border-2 border-[#4f7cff]/80" />
+                <div className="absolute right-12 bottom-28 h-3 w-3 rounded-full bg-[#8b5cf6]/70" />
+                <div className="absolute left-10 bottom-36 h-2 w-2 rounded-full bg-[#d946ef]/70" />
+              </div>
+            </div>
+
+            <div className="relative flex flex-col justify-center bg-gradient-to-br from-[#090511] via-[#0b0717] to-[#05030d] px-5 py-8 sm:px-10 sm:py-12">
+              <div className="absolute right-4 top-4 sm:right-8 sm:top-8 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-xl">
+                <span className="text-sm sm:text-xl font-medium tracking-wide text-white/70">
+                  ✦ Aprenda. Jogue. Conecte-se.
                 </span>
               </div>
 
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">
-                Bem-vindo!
-              </h2>
-              <p className="text-gray-500 mb-8">
-                Teste suas habilidades em LIBRAS e descubra as palavras!
-                Junte-se a nós para aprender e se conectar com a comunidade
-                surda.
-              </p>
+              <div className="max-w-xl">
+                <span className="mb-4 block text-3xl sm:text-4xl font-medium text-[#8b5cf6]">
+                  Olá, seja bem-vindo(a)!
+                </span>
 
-              <button
-                onClick={() => setShowCategories(true)}
-                className="w-full bg-purple-700 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center gap-2"
-              >
-                <Play className="w-5 h-5 fill-white" />
-                Iniciar o jogo
-              </button>
-            </div>
+                <h2 className="mb-5 text-5xl sm:text-6xl xl:text-7xl font-black leading-[0.95] tracking-tight text-white">
+                  Vamos
+                  <br />
+                  <span className="bg-gradient-to-r from-[#5B8CFF] via-[#8b5cf6] to-[#d946ef] bg-clip-text text-transparent">
+                    jogar?
+                  </span>
+                </h2>
 
-            {/* ── Painel 2: Categorias ── */}
-            <div className="p-8 flex flex-col" style={{ width: "50%" }}>
-              {/* Cabeçalho do painel */}
-              <div className="flex items-center gap-4 mb-6">
+                <div className="mb-6 h-1 w-20 rounded-full bg-gradient-to-r from-[#5B8CFF] to-[#d946ef]" />
+
+                <p className="mb-8 text-lg sm:text-2xl leading-relaxed text-white/60">
+                  Teste suas habilidades em{" "}
+                  <span className="font-semibold text-[#a855f7]">LIBRAS</span> e
+                  descubra novas palavras! Aprenda, divirta-se e conecte-se com
+                  a comunidade surda.
+                </p>
+
                 <button
-                  onClick={() => setShowCategories(false)}
-                  className="p-2 rounded-full hover:bg-gray-200 transition-colors text-gray-600"
-                  aria-label="Voltar"
+                  onClick={() => setShowCategories(true)}
+                  className="group flex h-14 sm:h-16 w-full items-center justify-center gap-4 rounded-2xl bg-gradient-to-r from-[#5b21b6] via-[#9333ea] to-[#d946ef] text-xl font-bold text-white shadow-[0_0_45px_rgba(168,85,247,0.45)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_65px_rgba(168,85,247,0.7)]"
                 >
-                  <ChevronLeft className="w-7 h-7" />
-                </button>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 leading-none">
-                    Escolha um tema
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-1">
-                    As palavras serão filtradas pela categoria
+                  <Play className="h-6 w-6 fill-white transition-transform duration-300 group-hover:translate-x-1" />
+
+                  <p className="text-2xl sm:text-3xl text-white">
+                    Iniciar o jogo
                   </p>
-                </div>
-              </div>
-
-              {/* Grade de categorias */}
-              <div className="grid grid-cols-2 gap-4">
-                {/* "Todas" ocupa a linha toda */}
-                <button
-                  onClick={() => handleSelectCategory("todas")}
-                  className={`col-span-2 bg-gradient-to-r ${CATEGORIES[0].gradient} text-white rounded-2xl p-5 flex items-center gap-4 hover:opacity-90 hover:scale-[1.02] transition-all duration-200 shadow-md`}
-                >
-                  <span className="text-4xl">{CATEGORIES[0].icon}</span>
-                  <div className="text-left">
-                    <p className="font-bold text-lg leading-none">
-                      {CATEGORIES[0].label}
-                    </p>
-                    <p className="text-white/70 text-sm mt-1">
-                      {countByCategory("todas")} palavras
-                    </p>
-                  </div>
                 </button>
-
-                {/* Demais categorias em 2 colunas */}
-                {CATEGORIES.slice(1).map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => handleSelectCategory(cat.id)}
-                    className={`bg-gradient-to-br ${cat.gradient} text-white rounded-2xl p-5 flex flex-col items-center gap-2 hover:opacity-90 hover:scale-[1.03] transition-all duration-200 shadow-md`}
-                  >
-                    <span className="text-5xl">{cat.icon}</span>
-                    <p className="font-bold text-lg leading-none text-center">
-                      {cat.label}
-                    </p>
-                    <p className="text-white/70 text-sm">
-                      {countByCategory(cat.id)} palavras
-                    </p>
-                  </button>
-                ))}
               </div>
             </div>
           </div>
+
+          {/* ── Painel 2: Categorias ── */}
+          <div
+            className="relative flex h-[100dvh] max-h-[860px] flex-col overflow-hidden p-4 sm:p-6"
+            style={{ width: "50%" }}
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.18),transparent_55%)] pointer-events-none" />
+
+            <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-cyan-500/5 pointer-events-none" />
+
+            <div className="absolute top-20 right-16 h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_20px_#22d3ee]" />
+            <div className="absolute top-40 right-40 h-2 w-2 rounded-full bg-fuchsia-500 shadow-[0_0_18px_#d946ef]" />
+            <div className="absolute bottom-24 left-10 h-2 w-2 rounded-full bg-violet-400 shadow-[0_0_18px_#8b5cf6]" />
+
+            {/* Cabeçalho do painel */}
+            <div className="relative z-10 mb-5 flex items-center gap-3 sm:gap-4">
+              <button
+                onClick={() => setShowCategories(false)}
+                className="group flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border border-fuchsia-500/20 bg-white/5 text-fuchsia-300 backdrop-blur-md transition-all duration-300 hover:bg-fuchsia-500/10 hover:shadow-[0_0_25px_rgba(217,70,239,0.5)]"
+                aria-label="Voltar"
+              >
+                <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7 transition-transform duration-300 group-hover:-translate-x-1" />
+              </button>
+
+              <div>
+                <h2 className="text-2xl sm:text-4xl font-black text-white leading-none tracking-tight">
+                  Escolha um{" "}
+                  <span className="bg-gradient-to-r from-violet-400 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+                    tema
+                  </span>
+                </h2>
+
+                <p className="mt-2 text-sm sm:text-lg text-zinc-400">
+                  As palavras serão filtradas pela categoria
+                </p>
+              </div>
+            </div>
+
+            {/* Grade de categorias */}
+            <div className="relative z-10 grid flex-1 grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto overflow-x-hidden pr-1">
+              {/* "Todas" ocupa a linha toda */}
+              <button
+                onClick={() => handleSelectCategory("todas")}
+                className={`group relative overflow-hidden rounded-[28px] border border-fuchsia-500/20 bg-gradient-to-r ${CATEGORIES[0].gradient} p-[1px] transition-all duration-300 hover:scale-[1.01] sm:col-span-2`}
+              >
+                <div className="relative flex items-center justify-between rounded-[28px] bg-[#12001d] px-4 sm:px-6 py-4 sm:py-5 shadow-[0_0_40px_rgba(217,70,239,0.35)]">
+                  <div className="absolute inset-0 opacity-70 bg-gradient-to-r from-fuchsia-500/10 via-transparent to-violet-500/10" />
+
+                  <div className="relative z-10 flex items-center gap-4">
+                    <div
+                      className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-3xl ${CATEGORIES[0].iconBg}`}
+                    >
+                      <LayoutGrid className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                    </div>
+
+                    <div className="text-left">
+                      <p className="text-2xl sm:text-4xl font-black leading-none text-white">
+                        {CATEGORIES[0].label}
+                      </p>
+
+                      <p className="mt-1 sm:mt-2 text-sm sm:text-lg text-white/70">
+                        {countByCategory("todas")} palavras disponíveis
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="hidden sm:flex h-14 w-14 items-center justify-center rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.7)]">
+                    <ArrowRight className="h-7 w-7 text-fuchsia-300" />
+                  </div>
+                </div>
+              </button>
+
+              {/* Demais categorias em 2 colunas */}
+              {CATEGORIES.slice(1).map((cat) => {
+                const Icon = cat.icon;
+
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => handleSelectCategory(cat.id)}
+                    className={`group relative overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br ${cat.gradient} p-[1px] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]`}
+                  >
+                    <div className="relative flex h-full flex-col justify-between rounded-[24px] bg-[#100018] p-4 sm:p-5 shadow-[0_0_35px_rgba(168,85,247,0.18)]">
+                      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-white/5 to-transparent" />
+
+                      <div className="relative z-10 flex items-start justify-between">
+                        <div
+                          className={`flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl ${cat.iconBg}`}
+                        >
+                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
+                        </div>
+
+                        <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all duration-300 group-hover:bg-white/10 group-hover:shadow-[0_0_18px_rgba(255,255,255,0.25)]">
+                          <ArrowRight className="h-5 w-5 text-white" />
+                        </div>
+                      </div>
+
+                      <div className="relative z-10 mt-5 text-left">
+                        <p className="text-2xl sm:text-3xl font-black leading-none text-white">
+                          {cat.label}
+                        </p>
+
+                        <p className="mt-2 text-sm sm:text-lg text-white/65">
+                          {countByCategory(cat.id)} palavras
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
